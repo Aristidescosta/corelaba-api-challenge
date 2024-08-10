@@ -5,8 +5,12 @@
   "author": "Aristides da Costa",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "dev": "ts-node-dev ./src/index.ts"
+  },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "http-status-codes": "^2.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
