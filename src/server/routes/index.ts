@@ -8,7 +8,7 @@ router.get('/', (_, res) => {
 });
 
 
-router.post('/create-task', TasksController.create);
+router.post('/create-task', TasksController.createBodyValidator ,TasksController.create);
 
 
 export { router };

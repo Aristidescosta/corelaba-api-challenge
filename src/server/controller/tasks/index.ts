@@ -1,5 +1,5 @@
 import * as create from './Create';
 
 export const TasksController = {
-  ...create
+  ...create,
 };

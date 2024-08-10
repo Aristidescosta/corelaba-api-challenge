@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
 
@@ -16,9 +16,12 @@ const validationSchema: yup.Schema<ITask> = yup.object({
   isCompleted: yup.boolean().required(),
   color: yup.string().required().min(3).max(255),
 });
-export const create = async (req: Request<{}, {}, ITask>, res: Response) => {
+
+
+export const createBodyValidator: RequestHandler = async(req, res, next) => {
   try {
     await validationSchema.validate(req.body, { abortEarly: false });
+    return next();
   } catch (err) {
     const yupError = err as yup.ValidationError;
     const errors: Record<string, string> = {};
@@ -30,6 +33,10 @@ export const create = async (req: Request<{}, {}, ITask>, res: Response) => {
 
     return res.status(StatusCodes.BAD_REQUEST).json({ errors });
   }
+};
+
+export const create = async (req: Request<{}, {}, ITask>, res: Response) => {
+
   const { title } = req.body;
 
   return res.status(StatusCodes.CREATED).send(`Tarefa "${title}" criada com sucesso`);
