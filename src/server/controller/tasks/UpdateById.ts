@@ -9,7 +9,7 @@ import { ITask } from './Create';
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<ITask>(yup.object({
     id: yup.string()/* .uuid() */.required(),
-    title: yup.string().required().min(5),
+    title: yup.string().required().min(3),
     description: yup.string().max(255),
     isFavorite: yup.boolean().required(),
     isCompleted: yup.boolean().required(),
@@ -27,5 +27,5 @@ export const updateByIdValidation = validation((getSchema) => ({
 
 export const updateById = async (req: Request<IParamsProps, {}, ITask>, res: Response) => {
 
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Método não implementado!');
+  return res.status(StatusCodes.OK).send('Método não implementado!');
 };

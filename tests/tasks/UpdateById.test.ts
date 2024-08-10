@@ -2,12 +2,10 @@
 import { StatusCodes } from 'http-status-codes';
 import { testServer } from '../jest.setup';
 
-
-
-describe('Tarefas - Create', () => {
-  it('Criar tarefa', async () => {
+describe('Tarefas - Update', () => {
+  it('Atualizar tarefa', async () => {
     const res1 = await testServer
-      .post('/tasks')
+      .put('/tasks/2')
       .send({
         title: 'Concluir o teste',
         description: 'Se eu passar nesse teste minha vida vai mudar',
@@ -19,11 +17,11 @@ describe('Tarefas - Create', () => {
         updatedAt: 'Sat Aug 10 2024 14:11:08 GMT+0100 (Horário Padrão da África Ocidental)'
       });
 
-    expect(res1.statusCode).toEqual(StatusCodes.CREATED);
+    expect(res1.statusCode).toEqual(StatusCodes.OK);
   });
-  it('Criar tarefa sem descrição', async () => {
+  it('Atualizar tarefa sem descrição', async () => {
     const res1 = await testServer
-      .post('/tasks')
+      .put('/tasks/2')
       .send({
         title: 'Concluir o teste',
         isCompleted: false,
@@ -34,11 +32,26 @@ describe('Tarefas - Create', () => {
         updatedAt: 'Sat Aug 10 2024 14:11:08 GMT+0100 (Horário Padrão da África Ocidental)'
       });
 
-    expect(res1.statusCode).toEqual(StatusCodes.CREATED);
+    expect(res1.statusCode).toEqual(StatusCodes.OK);
   });
-  it('Tenta criar tarefa com com uma descrição muito grande', async () => {
+  it('Tenta Atualizar tarefa com valor da cor menor 3', async () => {
     const res1 = await testServer
-      .post('/tasks')
+      .put('/tasks/2')
+      .send({
+        title: 'Co',
+        isCompleted: false,
+        color: '#FFF',
+        id: 'Este campo é obrigatório',
+        isFavorite: false,
+        createdAt: 'Sat Aug 10 2024 14:11:08 GMT+0100 (Horário Padrão da África Ocidental)',
+        updatedAt: 'Sat Aug 10 2024 14:11:08 GMT+0100 (Horário Padrão da África Ocidental)'
+      });
+
+    expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
+  });
+  it('Tenta Atualizar tarefa com com uma descrição muito grande', async () => {
+    const res1 = await testServer
+      .put('/tasks/2')
       .send({
         title: 'Concluir o teste',
         isCompleted: false,
@@ -82,9 +95,9 @@ describe('Tarefas - Create', () => {
 
     expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST);
   });
-  it('Tenta criar tarefa com o nome curto', async () => {
+  it('Tenta Atualizar tarefa com o nome curto', async () => {
     const res1 = await testServer
-      .post('/tasks')
+      .put('/tasks/2')
       .send({
         title: 'Co',
         description: 'Se eu passar nesse teste minha vida vai mudar',
