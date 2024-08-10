@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { StatusCodes } from 'http-status-codes';
+import { TasksController } from '../controller';
 
 const router = Router();
 
@@ -8,10 +8,7 @@ router.get('/', (_, res) => {
 });
 
 
-router.post('/create-task', (req, res) => {
-  console.log(req.body);
-  return res.status(StatusCodes.UNAUTHORIZED).json('Rota de criação de tarefas');
-});
+router.post('/create-task', TasksController.create);
 
 
 export { router };

@@ -19,7 +19,8 @@ export default [
       'indent': ['error', 2],
       'linebreak-style': ['error', 'unix'],
       semi: ['error', 'always'],
-      '@typescript-eslint/no-empty-interface': 'off'
+      '@typescript-eslint/no-empty-interface': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
 ];
