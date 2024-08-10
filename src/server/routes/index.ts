@@ -9,7 +9,10 @@ router.get('/', (_, res) => {
 
 
 //Tasks
-router.post('/create-task', TasksController.createValidation, TasksController.create);
+router.delete('/tasks/:id', TasksController.deleteByIdValidation, TasksController.deleteById);
+router.put('/tasks/:id', TasksController.updateByIdValidation, TasksController.updateById);
+router.post('/tasks', TasksController.createValidation, TasksController.create);
+router.get('/tasks/:id', TasksController.getByIdValidation, TasksController.getById);
 router.get('/tasks', TasksController.getAllValidation, TasksController.getAll);
 
 

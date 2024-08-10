@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Request, Response } from 'express';
 import * as yup from 'yup';
+
 import { validation } from '../../shared/middlewares';
-interface ITask {
+export interface ITask {
   id: string;           // Unique identifier for the task item
   title: string;        // Title or name of the task
   description?: string; // Optional description of the task
@@ -12,11 +13,6 @@ interface ITask {
   createdAt: Date;      // Timestamp when the task was created
   updatedAt: Date;      // Timestamp when the task was last updated
 }
-
-interface IFilter {
-  filter: string;
-}
-
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<ITask>(yup.object({
@@ -28,12 +24,7 @@ export const createValidation = validation((getSchema) => ({
     color: yup.string().required().min(3).max(255),
     createdAt: yup.date().required(),
     updatedAt: yup.date().required(),
-  })),
-  query: getSchema<IFilter>(
-    yup.object({
-      filter: yup.string().required().min(3),
-    })
-  ),
+  }))
 }));
 
 

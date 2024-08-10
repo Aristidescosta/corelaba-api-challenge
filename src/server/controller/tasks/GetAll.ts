@@ -1,14 +1,13 @@
-import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { Request, Response } from 'express';
 import * as yup from 'yup';
-import { validation } from '../../shared/middlewares';
 
+import { validation } from '../../shared/middlewares';
 interface IQueryProps {
   page?: number,
   limit?: number,
   filter?: string,
 }
-
 
 export const getAllValidation = validation((getSchema) => ({
   query: getSchema<IQueryProps>(yup.object({
@@ -17,7 +16,6 @@ export const getAllValidation = validation((getSchema) => ({
     filter: yup.string()
   })),
 }));
-
 
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
   console.log(req.query);
