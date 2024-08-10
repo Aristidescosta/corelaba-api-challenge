@@ -8,7 +8,9 @@ router.get('/', (_, res) => {
 });
 
 
+//Tasks
 router.post('/create-task', TasksController.createValidation, TasksController.create);
+router.get('/tasks', TasksController.getAllValidation, TasksController.getAll);
 
 
 export { router };

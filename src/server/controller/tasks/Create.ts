@@ -3,11 +3,14 @@ import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
 import { validation } from '../../shared/middlewares';
 interface ITask {
-  title: string;
-  description: string;
-  isCompleted: boolean;
-  color: string;
-
+  id: string;           // Unique identifier for the task item
+  title: string;        // Title or name of the task
+  description?: string; // Optional description of the task
+  isFavorite: boolean;  // Whether the task is marked as a favorite
+  isCompleted: boolean;  // Whether the task is marked as a favorite
+  color: string;        // Color associated with the task (e.g., '#ff0000')
+  createdAt: Date;      // Timestamp when the task was created
+  updatedAt: Date;      // Timestamp when the task was last updated
 }
 
 interface IFilter {
@@ -17,10 +20,14 @@ interface IFilter {
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<ITask>(yup.object({
+    id: yup.string()/* .uuid() */.required(),
     title: yup.string().required().min(5),
-    description: yup.string().required().max(255),
+    description: yup.string().max(255),
+    isFavorite: yup.boolean().required(),
     isCompleted: yup.boolean().required(),
     color: yup.string().required().min(3).max(255),
+    createdAt: yup.date().required(),
+    updatedAt: yup.date().required(),
   })),
   query: getSchema<IFilter>(
     yup.object({
@@ -32,7 +39,5 @@ export const createValidation = validation((getSchema) => ({
 
 export const create = async (req: Request<{}, {}, ITask>, res: Response) => {
 
-  const { title } = req.body;
-
-  return res.status(StatusCodes.CREATED).send(`Tarefa "${title}" criada com sucesso`);
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Método não implementado!');
 };
