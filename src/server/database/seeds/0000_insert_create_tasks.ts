@@ -3,18 +3,6 @@ import { ETableNames } from '../ETableNames';
 import { ITask } from '../models';
 
 export const seed = async (knex: Knex) => {
-  /* knex(ETableNames.tasks).insert(
-    {
-      title: 'Concluir o teste',
-      description: 'Se eu passar nesse teste minha vida vai mudar',
-      isCompleted: false,
-      color: '#FFF',
-      isFavorite: false,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
-  ); */
-
   const [{ count }] = await knex(ETableNames.tasks).count<[{ count: number }]>('* as count');
   if (!Number.isInteger(count) || Number(count) > 0) return;
 
@@ -23,8 +11,8 @@ export const seed = async (knex: Knex) => {
     id: index + 1,
     title: `Task ${index + 1}`,
     description: `This is the description for task ${index + 1}`,
-    isFavorite: Math.random() > 0.7,  // Randomly marks some tasks as favorite
-    isCompleted: Math.random() > 0.5, // Randomly marks some tasks as completed
+    isFavorite: Math.random() > 0.7,
+    isCompleted: Math.random() > 0.5,
     color: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`, // Random color
     createdAt: new Date(),
     updatedAt: new Date(),
