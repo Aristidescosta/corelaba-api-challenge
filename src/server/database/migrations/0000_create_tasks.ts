@@ -7,11 +7,11 @@ export async function up(knex: Knex) {
     .schema
     .createTable(ETableNames.tasks, table => {
       table.bigIncrements('id').primary().index();
-      table.string('title', 150);
-      table.string('description', 255);
+      table.string('title', 150).checkLength('<=', 150).notNullable();
+      table.string('description', 255).checkLength('<=', 250).notNullable();
       table.boolean('isFavorite');
       table.boolean('isCompleted');
-      table.string('color', 150);
+      table.string('color', 150).checkLength('<=', 150).notNullable();
       table.date('createdAt');
       table.date('updatedAt');
 

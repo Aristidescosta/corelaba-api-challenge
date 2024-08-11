@@ -1,5 +1,5 @@
 export interface ITask {
-  id: string;           // Unique identifier for the task item
+  id: number;           // Unique identifier for the task item
   title: string;        // Title or name of the task
   description?: string; // Optional description of the task
   isFavorite: boolean;  // Whether the task is marked as a favorite
