@@ -7,9 +7,9 @@ export async function up(knex: Knex) {
     .schema
     .createTable(ETableNames.user, table => {
       table.bigIncrements('id').primary().index();
-      table.string('name').checkLength('>', 3).checkLength('<=', 150).notNullable();
-      table.string('email').unique().checkLength('>', 5).notNullable();
-      table.string('password').unique().checkLength('>', 6).notNullable();
+      table.string('name').checkLength('>=', 3).checkLength('<=', 150).notNullable();
+      table.string('email').unique().checkLength('>=', 5).notNullable().index();
+      table.string('password').unique().checkLength('>=', 6).notNullable();
 
 
       table.comment('Tabela para armazenar as usuários');

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { TasksController } from '../controller';
+import { TasksController, UserController } from '../controller';
 
 const router = Router();
 
@@ -14,6 +14,10 @@ router.put('/tasks/:id', TasksController.updateByIdValidation, TasksController.u
 router.post('/tasks', TasksController.createValidation, TasksController.create);
 router.get('/tasks/:id', TasksController.getByIdValidation, TasksController.getById);
 router.get('/tasks', TasksController.getAllValidation, TasksController.getAll);
+
+//Users
+router.post('/signin', UserController.signInValidation, UserController.signIn);
+router.post('/signup', UserController.signUpValidation, UserController.signUp);
 
 
 export { router };
