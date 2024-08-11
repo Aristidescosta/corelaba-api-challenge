@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
+import { TasksProvider } from '../../database/providers/tasks';
 
 export interface IParamsProps {
   id?: number,
@@ -16,6 +17,25 @@ export const getByIdValidation = validation((getSchema) => ({
 
 
 export const getById = async (req: Request<IParamsProps>, res: Response) => {
-  console.log(req.query);
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send('Método não implementado!');
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'O parâmetro "id" precisa ser informado'
+      }
+    });
+  }
+
+  const result = await TasksProvider.getById(id);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.OK).json(result);
 };

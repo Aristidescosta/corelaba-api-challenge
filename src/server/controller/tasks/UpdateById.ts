@@ -6,6 +6,7 @@ import { validation } from '../../shared/middlewares';
 import { ITask } from '../../database/models';
 import { IParamsProps } from './GetById';
 import { IBodyProps } from './Create';
+import { TasksProvider } from '../../database/providers/tasks';
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object({
@@ -26,6 +27,26 @@ export const updateByIdValidation = validation((getSchema) => ({
 
 
 export const updateById = async (req: Request<IParamsProps, {}, ITask>, res: Response) => {
+  const { id } = req.params;
+  const task = req.body;
 
-  return res.status(StatusCodes.OK).send('Método não implementado!');
+  if (!id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'O parâmetro "id" precisa ser informado'
+      }
+    });
+  }
+
+  const result = await TasksProvider.updateById(id, task);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
+
+  return res.status(StatusCodes.NO_CONTENT).json(result);
 };

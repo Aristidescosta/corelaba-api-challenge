@@ -4,6 +4,7 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
 import { IParamsProps } from './GetById';
+import { TasksProvider } from '../../database/providers/tasks';
 
 export const deleteByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamsProps>(yup.object({
@@ -14,11 +15,24 @@ export const deleteByIdValidation = validation((getSchema) => ({
 
 export const deleteById = async (req: Request<IParamsProps>, res: Response) => {
   const { id } = req.params;
-  if(Number(id) === 99999)  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    errors: {
-      default: 'Registro não encontrado'
-    }
-  });
+
+  if (!id) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      errors: {
+        default: 'O parâmetro "id" precisa ser informado'
+      }
+    });
+  }
+
+  const result = await TasksProvider.deleteById(id);
+
+  if (result instanceof Error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: {
+        default: result.message
+      }
+    });
+  }
 
   return res.status(StatusCodes.NO_CONTENT).send();
 };
