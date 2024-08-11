@@ -6,7 +6,6 @@ export const seed = async (knex: Knex) => {
   const [{ count }] = await knex(ETableNames.tasks).count<[{ count: number }]>('* as count');
   if (!Number.isInteger(count) || Number(count) > 0) return;
 
-
   const tasksToInsert: ITask[] = Array.from({ length: 400 }, (_, index) => ({
     id: index + 1,
     title: `Task ${index + 1}`,
