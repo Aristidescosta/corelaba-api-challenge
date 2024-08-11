@@ -16,7 +16,7 @@ export default [
       'no-unused-vars': 'error',
       'no-undef': 'error',
       quotes: ['error', 'single'],
-      'indent': ['error', 2, { "SwitchCase": 1 }],
+      'indent': ['error', 2, { 'SwitchCase': 1 }],
       'linebreak-style': ['error', 'unix'],
       semi: ['error', 'always'],
       '@typescript-eslint/no-empty-interface': 'off',

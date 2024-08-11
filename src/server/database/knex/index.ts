@@ -9,4 +9,4 @@ const getEnvironment = () => {
   }
 };
 
-export const Knex = knex();
+export const Knex = knex(getEnvironment());
