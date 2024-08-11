@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { UserProvider } from '../../database/providers/users';
 import { validation } from '../../shared/middlewares';
 import { IUser } from '../../database/models';
-import { PasswordCrypto } from '../../shared/services';
+import { JWTService, PasswordCrypto } from '../../shared/services';
 
 export interface IBodyProps extends Omit<IUser, 'id' | 'name'> { }
 
@@ -29,8 +29,15 @@ export const signIn = async (req: Request<{}, {}, IUser>, res: Response) => {
       }
     });
   } else {
-    return res.status(StatusCodes.OK).json({
-      accessToken: 'teste.teste.teste'
-    });
+
+    const accessToken = JWTService.signin({ uid: result.id });
+    if (accessToken === 'JWT_SECRET_NOT_FOUND') {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        errors: {
+          default: 'Erro ao gerar o token de acesso, tente novamente'
+        }
+      });
+    };
+    return res.status(StatusCodes.OK).json({ accessToken });
   }
 };
