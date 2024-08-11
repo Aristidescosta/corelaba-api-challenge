@@ -37,6 +37,7 @@ export const production: Knex.Config = {
     directory: path.resolve(__dirname, '..', 'seeds')
   },
   connection: {
+    connectString: process.env.DATABASE_URL,
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     database: process.env.DATABASE_DATABASE,
