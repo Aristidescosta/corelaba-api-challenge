@@ -1,6 +1,12 @@
 $primary-color: #f0f2f5;
 $text-color: #455a64;
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Inter", sans-serif;
   background-color: $primary-color;
@@ -10,4 +16,11 @@ body {
   span {
     color: #455a64;
   }
+}
+
+.flex {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
