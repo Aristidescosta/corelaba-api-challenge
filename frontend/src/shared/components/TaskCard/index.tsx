@@ -11,11 +11,11 @@ import "./task-card.scss";
 interface ITaskCardProps {
   toCreate?: boolean;
   toEdit?: boolean;
-  task: ITaskProps;
+  task?: ITaskProps;
 }
 
 export interface ITaskProps {
-  title?: string;
+  title: string;
   isFavorite: boolean;
   color: string;
 }
@@ -26,6 +26,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   task,
 }) => {
   const [cardTitle, setCardTitle] = useState("Título");
+  const [cardColor, setCardColor] = useState("#FFF");
   const [showMenuColors, setShowMenuColors] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -46,8 +47,22 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (task) {
+      setCardTitle(task.title);
+      setCardColor(task.color);
+    }
+  }, [task]);
+
+  const onChangeTaskColor = (color: string) => {
+    setCardColor(color)
+  };
+
   return (
-    <div className={`card ${toCreate ? "h-32" : ""}`}>
+    <div
+      className={`card ${toCreate ? "h-32" : ""}`}
+      style={{ backgroundColor: cardColor }}
+    >
       <div className="flex">
         {toCreate || toEdit ? (
           <input
@@ -60,7 +75,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
           <h3>{cardTitle}</h3>
         )}
 
-        {!task.isFavorite ? (
+        {!task?.isFavorite ? (
           <FaRegStar size={24} />
         ) : (
           <FaStar color={"#FFA000"} size={24} />
@@ -94,7 +109,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
             onClick={() => setShowMenuColors(true)}
           />
           <div ref={dropdownRef}>
-            {showMenuColors && <DropdownMenuColors toCreate={toCreate} />}
+            {showMenuColors && <DropdownMenuColors onChangeTaskColor={onChangeTaskColor} toCreate={toCreate} />}
           </div>
         </div>
         <CgClose

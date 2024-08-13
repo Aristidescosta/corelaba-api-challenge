@@ -68,21 +68,24 @@ main {
   display: flex;
   flex-direction: column;
 
+  @media (min-width: 768px) {
+    padding: 0 6rem;
+
+    .list-task {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 14px;
+      gap: 15px;
+      /* justify-content: space-between; */
+      align-items: center;
+    }
+  }
+
   .center {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 12px;
-
-    .list-task {
-      @media (min-width: 768px) {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0 14px;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
   }
 
   article {
