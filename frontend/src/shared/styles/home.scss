@@ -91,6 +91,12 @@ main {
   article {
     margin: 24px 0;
 
+    &.center {
+      @media (min-width: 768px) {
+        align-items: flex-start;
+      }
+    }
+
     p {
       text-align: start;
       width: 320px;
@@ -99,10 +105,6 @@ main {
         align-self: flex-start;
         margin-left: 14px;
       }
-    }
-
-    div > div {
-      margin-bottom: 24px;
     }
   }
 }

@@ -24,21 +24,20 @@ div {
     }
 
     input {
-      width: 80%;
-
       border: none;
 
       font-size: 18.72px;
       font-weight: 700;
       font-family: "Inter", sans-serif;
       color: #50656e;
-
+      background-color: transparent;
       outline: none;
     }
 
     .flex {
       padding: 12px;
       justify-content: space-between;
+      align-items: center;
     }
 
     .flex-content {

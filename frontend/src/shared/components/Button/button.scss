@@ -1,0 +1,71 @@
+// Variables
+$default-color: #3182CE;
+$border-radius: 0.375rem;
+$font-weight: 600;
+$transition: background-color 0.2s ease, color 0.2s ease;
+
+// Base Styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius;
+  font-weight: $font-weight;
+  cursor: pointer;
+  transition: $transition;
+  border-width: 2px;
+  border-style: solid;
+  padding: 0.5rem 1rem;
+
+  &.solid {
+    background-color: $default-color;
+    color: white;
+    border-color: $default-color;
+
+    &:hover {
+      background-color: darken($default-color, 10%);
+    }
+  }
+
+  &.outline {
+    background-color: transparent;
+    color: $default-color;
+    border-color: $default-color;
+
+    &:hover {
+      background-color: lighten($default-color, 40%);
+    }
+  }
+
+  &.ghost {
+    background-color: transparent;
+    color: $default-color;
+    border: none;
+
+    &:hover {
+      background-color: lighten($default-color, 40%);
+    }
+  }
+
+  &.sm {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+  }
+
+  &.md {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  &.lg {
+    font-size: 1.125rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  &:disabled {
+    background-color: #E2E8F0;
+    color: #A0AEC0;
+    cursor: not-allowed;
+    border-color: #E2E8F0;
+  }
+}
