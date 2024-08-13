@@ -73,6 +73,16 @@ main {
     align-items: center;
     flex-direction: column;
     gap: 12px;
+
+    .list-task {
+      @media (min-width: 768px) {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 14px;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
   }
 
   article {
@@ -81,9 +91,14 @@ main {
     p {
       text-align: start;
       width: 320px;
+
+      @media (min-width: 768px) {
+        align-self: flex-start;
+        margin-left: 14px;
+      }
     }
 
-    div > div{
+    div > div {
       margin-bottom: 24px;
     }
   }

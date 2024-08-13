@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
-import { Divider } from "../Divider";
 import { CgClose } from "react-icons/cg";
-import "./task-card.scss";
+
 import { DropdownMenuColors } from "../DropdownMenuColors";
+import { Divider } from "../Divider";
+
+import "./task-card.scss";
 
 interface ITaskCardProps {
   toCreate?: boolean;
@@ -25,10 +27,6 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
 }) => {
   const [cardTitle, setCardTitle] = useState("Título");
   const [showMenuColors, setShowMenuColors] = useState(false);
-
-  const removeMenuColors = () => {
-    setShowMenuColors(false);
-  };
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 

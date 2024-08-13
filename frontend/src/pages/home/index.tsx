@@ -20,18 +20,18 @@ export const Home: React.FC = () => {
         <article className="center">
           <p>Favoritos</p>
 
-          <div>
+          <div className="list-task">
             {[1, 2, 3, 4, 5].map((item, index) => (
-              <TaskCard task={task} key={index}/>
+              <TaskCard task={task} key={index} />
             ))}
           </div>
         </article>
         <article className="center">
           <p>Outras</p>
 
-          <div>
+          <div className="list-task">
             {[1, 2, 3, 4, 5].map((item, index) => (
-              <TaskCard task={task} key={index}/>
+              <TaskCard task={task} key={index} />
             ))}
           </div>
         </article>
