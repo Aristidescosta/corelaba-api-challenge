@@ -1,0 +1,13 @@
+$primary-color: #f0f2f5;
+$text-color: #455a64;
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: $primary-color;
+
+  h1,
+  p,
+  span {
+    color: #455a64;
+  }
+}
