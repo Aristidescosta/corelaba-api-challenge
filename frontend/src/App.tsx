@@ -1,7 +1,8 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "./pages/home";
 import { ToastContainer } from "react-toastify";
+import React from "react";
+
+import { Home } from "@/pages";
 
 const router = createBrowserRouter([
   {

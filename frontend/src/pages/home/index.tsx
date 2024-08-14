@@ -1,24 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { ITaskType, TaskCard } from "../../shared/components/TaskCard";
-import { addTask, getAllTasks } from "../../shared/repository";
-import { Header } from "../../shared/components/Header";
+import { Header, ModalDelete, TaskCard } from "@/shared/components";
+import { addTask, getAllTasks } from "@/shared/repository";
+import { ITaskType } from "@/shared/types";
 
-import { ModalDelete } from "../../shared/components/ModalDelete";
-import "../../shared/styles/home.scss";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+import '@/shared/styles/home.scss'
+
 
 export const Home: React.FC = () => {
   const [tasks, setTasks] = useState<ITaskType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-
-  const functionThatReturnPromise = () =>
-    toast.promise(functionThatReturnPromise, {
-      pending: "Promise is pending",
-      success: "Promise resolved 👌",
-      error: "Promise rejected 🤯",
-    });
 
   const onOpen = () => {
     setIsOpen(true);

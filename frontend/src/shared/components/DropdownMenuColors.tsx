@@ -1,4 +1,5 @@
 import React from "react";
+
 import { ColorPalette } from "./ColorPalette";
 
 export interface IDropdownMenuColorsProps {

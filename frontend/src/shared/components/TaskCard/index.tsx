@@ -3,10 +3,11 @@ import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 
+import { ITaskType } from "@/shared/types";
+
 import { DropdownMenuColors } from "../DropdownMenuColors";
-import { ITaskType } from "../../types";
-import { Divider } from "../Divider";
 import { Tooltip } from "../Tooltip";
+import { Divider } from "../Divider";
 
 import "./task-card.scss";
 

@@ -1,5 +1,7 @@
 import React from "react";
+
 import "./ColorPalette.scss";
+
 import { IDropdownMenuColorsProps } from "../DropdownMenuColors";
 
 type ColorPaletteProps = {
