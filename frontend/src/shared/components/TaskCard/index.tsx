@@ -14,7 +14,7 @@ import "./task-card.scss";
 interface ITaskCardProps {
   toCreate?: boolean;
   task?: ITaskType;
-  handleCreateTask: (task: ITaskType) => Promise<void>;
+  handleCreateTask: (task: Omit<ITaskType, "id">) => Promise<void>;
   handleClickToDelete?: () => void;
 }
 
@@ -75,7 +75,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   };
 
   const onCreateTask = async () => {
-    const task: ITaskType = {
+    const task: Omit<ITaskType, "id"> = {
       color: cardColor,
       title: cardTitle,
       isFavorite: isFavorite,

@@ -1,7 +1,7 @@
-import { TaskDAO } from "../services/api/Task"
+import { TaskDAO, TTaskWithTotalCount } from "../services/api/Task"
 import { ITaskType } from "../types"
 
-export const addTask = (task: Omit<ITaskType, 'id'>): Promise<void> => {
+export const addTask = (task: Omit<ITaskType, 'id'>): Promise<number> => {
     return new Promise((resolve, reject) => {
         if (task.title.trim() === '') {
             reject('Insira o titulo da tarefa')
@@ -9,23 +9,30 @@ export const addTask = (task: Omit<ITaskType, 'id'>): Promise<void> => {
             reject('Insira uma nota para este item')
         }
         else {
+            console.log("Tarefa: " + task)
             TaskDAO.create(task)
                 .then((response) => {
                     if (response instanceof Error) {
                         reject(response)
                     } else {
-                        resolve()
+                        resolve(response)
                     }
                 })
-                .catch(reject)
+                .catch((error) => console.log(error))
         }
     })
 }
 
-export const getAllTasks = async () => {
-    try {
-        return TaskDAO.getAll()
-    } catch (error) {
-        throw new Error("Erro ao recuperar os dados" + error);
-    }
+export const getAllTasks = (): Promise<TTaskWithTotalCount> => {
+    return new Promise((resolve, reject) => {
+        TaskDAO.getAll()
+            .then((response) => {
+                if (response instanceof Error) {
+                    reject(response)
+                } else {
+                    resolve(response)
+                }
+            })
+            .catch((error) => console.log(error))
+    })
 }

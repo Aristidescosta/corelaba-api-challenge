@@ -3,14 +3,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Header, ModalDelete, TaskCard } from "@/shared/components";
 import { addTask, getAllTasks } from "@/shared/repository";
 import { ITaskType } from "@/shared/types";
+import "@/shared/styles/home.scss";
+
+import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import '@/shared/styles/home.scss'
-
 
 export const Home: React.FC = () => {
   const [tasks, setTasks] = useState<ITaskType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onOpen = () => {
     setIsOpen(true);
@@ -19,28 +21,63 @@ export const Home: React.FC = () => {
     setIsOpen(false);
   };
 
-  const handleCreateTask = useCallback(async (task: ITaskType) => {
-    addTask(task)
-      .then(() => {
-        alert(`Tarefa ${task.title} criada com sucesso`);
-        setTasks([...tasks, task]);
-      })
-      .catch((error) => alert(error));
-  }, []);
+  const handleCreateTask = useCallback(
+    async (task: Omit<ITaskType, "id">) => {
+      if (!isLoading) {
+        setIsLoading(false);
+        toast.promise(
+          addTask(task)
+            .then((id) => {
+              setTasks((prevTasks) => [...prevTasks, { ...task, id }]);
+            })
+            .finally(() => setIsLoading(false)),
+          {
+            pending: "Criando tarefa...",
+            success: `Tarefa "${task.title}" criada com sucesso! 👌`,
+            error: {
+              render({ data }) {
+                console.log(typeof data);
+                const errorMessage =
+                  typeof data === "string" ? data : "Erro ao criar a tarefa 🤯";
+                return data instanceof Error ? data.message : errorMessage;
+              },
+            },
+          }
+        );
+      }
+    },
+    [setTasks]
+  );
 
   useEffect(() => {
     const onGetAllTasks = async () => {
-      try {
-        const allTasks = await getAllTasks();
-        setTasks(allTasks);
-      } catch (error) {
-        let errorMessage = "Houve um erro interno, tente novamente";
-        if (error instanceof Error) errorMessage = error.message;
-        alert(errorMessage);
-      }
+      setIsLoading(true);
+
+      toast.promise(
+        getAllTasks()
+          .then((allTasks) => {
+            setTasks(allTasks.data);
+          })
+          .finally(() => setIsLoading(false)),
+        {
+          pending: "Carregando a lista de tarefas...",
+          success: "Lista de tarefas carregada com sucesso! 👌",
+          error: {
+            render({ data }) {
+              console.log(typeof data);
+              const errorMessage =
+                typeof data === "string"
+                  ? data
+                  : "Erro ao carregar a lista de tarefas 🤯";
+              return data instanceof Error ? data.message : errorMessage;
+            },
+          },
+        }
+      );
     };
+
     onGetAllTasks();
-  }, [handleCreateTask]);
+  }, []);
 
   return (
     <>

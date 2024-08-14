@@ -4,7 +4,7 @@ import { ITaskType } from "@/shared/types";
 
 import { Api } from "../axios-config";
 
-type TTaskWithTotalCount = {
+export type TTaskWithTotalCount = {
   data: ITaskType[];
   totalCount: number;
 };
