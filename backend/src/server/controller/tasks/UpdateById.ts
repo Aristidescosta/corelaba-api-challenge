@@ -13,7 +13,6 @@ export const updateByIdValidation = validation((getSchema) => ({
     title: yup.string().required().min(3),
     description: yup.string().max(255),
     isFavorite: yup.boolean().required(),
-    isCompleted: yup.boolean().required(),
     color: yup.string().required().min(3).max(255),
     createdAt: yup.date().required(),
     updatedAt: yup.date().required(),

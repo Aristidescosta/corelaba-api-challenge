@@ -11,7 +11,6 @@ export const seed = async (knex: Knex) => {
     title: `Task ${index + 1}`,
     description: `This is the description for task ${index + 1}`,
     isFavorite: Math.random() > 0.7,
-    isCompleted: Math.random() > 0.5,
     color: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`, // Random color
     createdAt: new Date(),
     updatedAt: new Date(),

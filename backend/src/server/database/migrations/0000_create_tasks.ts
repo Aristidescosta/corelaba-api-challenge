@@ -10,7 +10,6 @@ export async function up(knex: Knex) {
       table.string('title', 150).checkLength('<=', 150).notNullable();
       table.string('description', 255).checkLength('<=', 250).notNullable();
       table.boolean('isFavorite');
-      table.boolean('isCompleted');
       table.string('color', 150).checkLength('<=', 150).notNullable();
       table.date('createdAt');
       table.date('updatedAt');

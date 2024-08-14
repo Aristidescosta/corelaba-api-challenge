@@ -10,11 +10,11 @@ router.get('/', (_, res) => {
 
 
 //Tasks
-router.delete('/tasks/:id', ensureAuthenticated, TasksController.deleteByIdValidation, TasksController.deleteById);
-router.put('/tasks/:id', ensureAuthenticated, TasksController.updateByIdValidation, TasksController.updateById);
-router.post('/tasks', ensureAuthenticated, TasksController.createValidation, TasksController.create);
-router.get('/tasks/:id', ensureAuthenticated, TasksController.getByIdValidation, TasksController.getById);
-router.get('/tasks', ensureAuthenticated, TasksController.getAllValidation, TasksController.getAll);
+router.delete('/tasks/:id', /* ensureAuthenticated, */ TasksController.deleteByIdValidation, TasksController.deleteById);
+router.put('/tasks/:id', /* ensureAuthenticated, */ TasksController.updateByIdValidation, TasksController.updateById);
+router.post('/tasks', /* ensureAuthenticated, */ TasksController.createValidation, TasksController.create);
+router.get('/tasks/:id', /* ensureAuthenticated, */ TasksController.getByIdValidation, TasksController.getById);
+router.get('/tasks', /* ensureAuthenticated, */ TasksController.getAllValidation, TasksController.getAll);
 
 //Users
 router.post('/signin', UserController.signInValidation, UserController.signIn);

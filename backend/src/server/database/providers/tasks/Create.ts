@@ -4,6 +4,7 @@ import { ITask } from '../../models';
 
 export const create = async (task: Omit<ITask, 'id'>): Promise<number | Error> => {
   try {
+    console.log(task);
     const [result] = await Knex(ETableNames.tasks).insert(task).returning('id');
 
     if (typeof result === 'object') {

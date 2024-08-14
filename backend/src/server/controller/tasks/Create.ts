@@ -13,7 +13,6 @@ export const createValidation = validation((getSchema) => ({
     title: yup.string().required().min(5).max(150),
     description: yup.string().min(10).max(255),
     isFavorite: yup.boolean().required(),
-    isCompleted: yup.boolean().required(),
     color: yup.string().required().min(3).max(150),
     createdAt: yup.date().required(),
     updatedAt: yup.date().required(),
