@@ -15,7 +15,7 @@ interface ITaskCardProps {
   toCreate?: boolean;
   task?: ITaskType;
   handleCreateTask: (task: Omit<ITaskType, "id">) => Promise<void>;
-  handleClickToDelete?: () => void;
+  handleClickToDelete?: (task: ITaskType) => void;
 }
 
 export const TaskCard: React.FC<ITaskCardProps> = ({
@@ -173,7 +173,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
           size={24}
           cursor={"pointer"}
           className={`${toCreate ? "not-visible" : ""}`}
-          onClick={handleClickToDelete}
+          onClick={task ? () => handleClickToDelete?.(task) : undefined}
         />
       </div>
     </div>

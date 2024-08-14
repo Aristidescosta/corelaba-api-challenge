@@ -24,6 +24,7 @@ export const errorInterceptors = (error: AxiosError) => {
     }
 
     if (error.response?.status === 400) {
+        console.log(error.response)
         return Promise.reject(new Error("Erro no formato dos dados!"))
     }
 

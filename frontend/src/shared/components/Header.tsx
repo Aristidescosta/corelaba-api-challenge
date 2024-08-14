@@ -1,6 +1,14 @@
 import React from "react";
 
-export const Header: React.FC = () => {
+interface IHeaderProps {
+  whenChangingSearchText?: (newText: string) => void;
+  searchText?: string;
+}
+
+export const Header: React.FC<IHeaderProps> = ({
+  whenChangingSearchText,
+  searchText,
+}) => {
   return (
     <header>
       <div>
@@ -8,7 +16,12 @@ export const Header: React.FC = () => {
         <h1>CoreNotes</h1>
       </div>
       <div className="search">
-        <input type="text" placeholder="Pesquisar notas" />
+        <input
+          onChange={(e) => whenChangingSearchText?.(e.target.value)}
+          type="text"
+          value={searchText}
+          placeholder="Pesquisar notas"
+        />
         <img src="search.png" alt="Ícone de pesquisar" />
       </div>
 

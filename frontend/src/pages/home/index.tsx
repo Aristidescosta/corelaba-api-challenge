@@ -1,21 +1,37 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Header, ModalDelete, TaskCard } from "@/shared/components";
-import { addTask, getAllTasks } from "@/shared/repository";
+import { addTask, deleteTask, getAllTasks } from "@/shared/repository";
 import { ITaskType } from "@/shared/types";
 import "@/shared/styles/home.scss";
 
 import { toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import { useTask } from "@/shared/hooks";
+import { useTheBounce } from "@/shared/hooks/useTheBounce";
+import { useSearchParams } from "react-router-dom";
 
 export const Home: React.FC = () => {
   const [tasks, setTasks] = useState<ITaskType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const onOpen = () => {
+  const setTask = useTask((state) => state.setTask);
+  const isLoading = useTask((state) => state.isLoading);
+  const setLoading = useTask((state) => state.setLoading);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { theBounce } = useTheBounce();
+  const search = useMemo(() => {
+    return searchParams.get("filter") || "";
+  }, [searchParams]);
+
+  const page = useMemo(() => {
+    return Number(searchParams.get("page") || "1");
+  }, [searchParams]);
+
+  const onOpen = (task: ITaskType) => {
     setIsOpen(true);
+    setTask(task);
   };
   const onClose = () => {
     setIsOpen(false);
@@ -24,13 +40,13 @@ export const Home: React.FC = () => {
   const handleCreateTask = useCallback(
     async (task: Omit<ITaskType, "id">) => {
       if (!isLoading) {
-        setIsLoading(false);
+        setLoading(false);
         toast.promise(
           addTask(task)
-            .then((id) => {
-              setTasks((prevTasks) => [...prevTasks, { ...task, id }]);
+            .then((response) => {
+              setTasks((prevTasks) => [...prevTasks, response]);
             })
-            .finally(() => setIsLoading(false)),
+            .finally(() => setLoading(false)),
           {
             pending: "Criando tarefa...",
             success: `Tarefa "${task.title}" criada com sucesso! 👌`,
@@ -49,39 +65,73 @@ export const Home: React.FC = () => {
     [setTasks]
   );
 
-  useEffect(() => {
-    const onGetAllTasks = async () => {
-      setIsLoading(true);
+  const handleDeleteTask = useCallback(
+    async (taskId: number) => {
+      setLoading(true);
 
       toast.promise(
-        getAllTasks()
-          .then((allTasks) => {
-            setTasks(allTasks.data);
+        deleteTask(taskId)
+          .then(() => {
+            setTasks((prevTasks) =>
+              prevTasks.filter((task) => task.id !== taskId)
+            );
+            onClose();
           })
-          .finally(() => setIsLoading(false)),
+          .finally(() => setLoading(false)),
         {
-          pending: "Carregando a lista de tarefas...",
-          success: "Lista de tarefas carregada com sucesso! 👌",
+          pending: "Excluindo tarefa...",
+          success: "Tarefa excluída com sucesso! 👌",
           error: {
             render({ data }) {
-              console.log(typeof data);
               const errorMessage =
-                typeof data === "string"
-                  ? data
-                  : "Erro ao carregar a lista de tarefas 🤯";
+                typeof data === "string" ? data : "Erro ao excluir a tarefa 🤯";
               return data instanceof Error ? data.message : errorMessage;
             },
           },
         }
       );
+    },
+    [setTasks]
+  );
+
+  useEffect(() => {
+    const onGetAllTasks = async () => {
+      setLoading(true);
+      theBounce(() => {
+        toast.promise(
+          getAllTasks(page, search)
+            .then((allTasks) => {
+              setTasks(allTasks.data);
+            })
+            .finally(() => setLoading(false)),
+          {
+            pending: "Carregando a lista de tarefas...",
+            success: "Lista de tarefas carregada com sucesso! 👌",
+            error: {
+              render({ data }) {
+                const errorMessage =
+                  typeof data === "string"
+                    ? data
+                    : "Erro ao carregar a lista de tarefas 🤯";
+                return data instanceof Error ? data.message : errorMessage;
+              },
+            },
+          }
+        );
+      });
     };
 
     onGetAllTasks();
-  }, []);
+  }, [theBounce, search, page]);
 
   return (
     <>
-      <Header />
+      <Header
+        whenChangingSearchText={(texto) =>
+          setSearchParams({ filter: texto, page: "1" }, { replace: true })
+        }
+        searchText={searchParams.get("filter") ?? ""}
+      />
       <main>
         <section className="center">
           <p>Enter para salvar</p>
@@ -125,7 +175,9 @@ export const Home: React.FC = () => {
             </div>
           </article>
         )}
-        {isOpen && <ModalDelete onClose={onClose} />}
+        {isOpen && (
+          <ModalDelete handleDeleteTask={handleDeleteTask} onClose={onClose} />
+        )}
       </main>
     </>
   );

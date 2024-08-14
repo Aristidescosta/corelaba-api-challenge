@@ -1,15 +1,16 @@
 import { TaskDAO, TTaskWithTotalCount } from "../services/api/Task"
 import { ITaskType } from "../types"
 
-export const addTask = (task: Omit<ITaskType, 'id'>): Promise<number> => {
+export const addTask = (task: Omit<ITaskType, 'id'>): Promise<ITaskType> => {
     return new Promise((resolve, reject) => {
         if (task.title.trim() === '') {
             reject('Insira o titulo da tarefa')
         } else if (task.description.trim() === '') {
             reject('Insira uma nota para este item')
+        } else if (task.description.length < 9) {
+            reject('Descrição deve ter pelo menos 10 caracteres')
         }
         else {
-            console.log("Tarefa: " + task)
             TaskDAO.create(task)
                 .then((response) => {
                     if (response instanceof Error) {
@@ -23,9 +24,38 @@ export const addTask = (task: Omit<ITaskType, 'id'>): Promise<number> => {
     })
 }
 
-export const getAllTasks = (): Promise<TTaskWithTotalCount> => {
+export const getAllTasks = (page: number, filter: string): Promise<TTaskWithTotalCount> => {
     return new Promise((resolve, reject) => {
-        TaskDAO.getAll()
+        TaskDAO.getAll(page, filter)
+            .then((response) => {
+                if (response instanceof Error) {
+                    reject(response)
+                } else {
+                    resolve(response)
+                }
+            })
+            .catch((error) => console.log(error))
+    })
+}
+
+export const updateTask = (task: ITaskType): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        TaskDAO.updateById(task.id, task)
+            .then((response) => {
+                if (response instanceof Error) {
+                    reject(response)
+                } else {
+                    resolve(response)
+                }
+            })
+            .catch((error) => console.log(error))
+    });
+}
+
+export const deleteTask = (taskId: number): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        console.log(taskId)
+        TaskDAO.deleteById(taskId)
             .then((response) => {
                 if (response instanceof Error) {
                     reject(response)
