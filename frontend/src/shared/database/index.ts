@@ -1,6 +1,6 @@
-import { ITaskProps } from "../components/TaskCard";
+import { ITaskType } from "../components/TaskCard";
 
-const saveTask = (task: ITaskProps): Promise<void> => {
+const saveTask = (task: ITaskType): Promise<void> => {
     return new Promise((resolve, reject) => {
         getAllTasks()
             .then(allTasks => {
@@ -11,12 +11,12 @@ const saveTask = (task: ITaskProps): Promise<void> => {
     })
 }
 
-const getAllTasks = (): Promise<ITaskProps[]> => {
+const getAllTasks = (): Promise<ITaskType[]> => {
     return new Promise((resolve, reject) => {
         try {
             const tasks = localStorage.getItem('tasks')
             if (tasks) {
-                const parseTasks = JSON.parse(tasks) as ITaskProps[]
+                const parseTasks = JSON.parse(tasks) as ITaskType[]
                 resolve(parseTasks)
             }
             resolve([])

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { ITaskProps, TaskCard } from "../../shared/components/TaskCard";
+import { ITaskType, TaskCard } from "../../shared/components/TaskCard";
 import { addTask, getAllTasks } from "../../shared/repository";
 import { Header } from "../../shared/components/Header";
 
@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 export const Home: React.FC = () => {
-  const [tasks, setTasks] = useState<ITaskProps[]>([]);
+  const [tasks, setTasks] = useState<ITaskType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
   const functionThatReturnPromise = () =>
@@ -27,7 +27,7 @@ export const Home: React.FC = () => {
     setIsOpen(false);
   };
 
-  const handleCreateTask = useCallback(async (task: ITaskProps) => {
+  const handleCreateTask = useCallback(async (task: ITaskType) => {
     addTask(task)
       .then(() => {
         alert(`Tarefa ${task.title} criada com sucesso`);

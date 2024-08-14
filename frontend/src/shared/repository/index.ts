@@ -1,7 +1,7 @@
-import { ITaskProps } from "../components/TaskCard";
+import { ITaskType } from "../components/TaskCard";
 import { TaskDAO } from "../database";
 
-export const addTask = (task: ITaskProps): Promise<void> => {
+export const addTask = (task: ITaskType): Promise<void> => {
     return new Promise((resolve, reject) => {
         if (task.title.trim() === '') {
             reject('Insira o titulo da tarefa')

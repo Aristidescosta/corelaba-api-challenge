@@ -4,25 +4,17 @@ import { FaStar } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 
 import { DropdownMenuColors } from "../DropdownMenuColors";
+import { ITaskType } from "../../types";
 import { Divider } from "../Divider";
+import { Tooltip } from "../Tooltip";
 
 import "./task-card.scss";
-import { Tooltip } from "../Tooltip";
 
 interface ITaskCardProps {
   toCreate?: boolean;
-  task?: ITaskProps;
-  handleCreateTask: (task: ITaskProps) => Promise<void>;
+  task?: ITaskType;
+  handleCreateTask: (task: ITaskType) => Promise<void>;
   handleClickToDelete?: () => void;
-}
-
-export interface ITaskProps {
-  title: string;
-  description: string;
-  isFavorite: boolean;
-  color: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export const TaskCard: React.FC<ITaskCardProps> = ({
@@ -64,7 +56,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
     if (task) {
       setCardTitle(task.title);
       setCardColor(task.color);
-      setIsFavorite(task.isFavorite)
+      setIsFavorite(task.isFavorite);
     }
   }, [task]);
 
@@ -82,7 +74,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   };
 
   const onCreateTask = async () => {
-    const task: ITaskProps = {
+    const task: ITaskType = {
       color: cardColor,
       title: cardTitle,
       isFavorite: isFavorite,
@@ -104,7 +96,6 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
       }
     }
   };
-  
 
   return (
     <div
