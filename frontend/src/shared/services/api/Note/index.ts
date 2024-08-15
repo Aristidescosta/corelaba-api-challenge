@@ -1,40 +1,40 @@
 
 import { Environment } from "@/shared/Environment";
-import { ITaskType } from "@/shared/types";
+import { INoteType } from "@/shared/types";
 
 import { Api } from "../axios-config";
 
-export type TTaskWithTotalCount = {
-    data: ITaskType[];
+export type TNoteWithTotalCount = {
+    data: INoteType[];
     totalCount: number;
 };
 
 const getAll = async (
     page = 1,
     filter = ""
-): Promise<TTaskWithTotalCount | Error> => {
+): Promise<TNoteWithTotalCount | Error> => {
     try {
-        const relativeUrl = `/tasks?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&filter=${filter}`;
+        const relativeUrl = `/notes?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&filter=${filter}`;
         const { data, headers } = await Api.get(relativeUrl);
         if (data)
             return {
                 data,
                 totalCount: Number(headers["x-total-count"]) || data.length,
             };
-        return new Error("Erro ao listar os registos");
+        return new Error("Erro ao listar as notas");
     } catch (error) {
         console.error(error);
         return new Error(
-            (error as { message: string }).message || "Erro ao listar os registos"
+            (error as { message: string }).message || "Erro ao listar as notas"
         );
     }
 };
 
-const getById = async (id: number): Promise<ITaskType | Error> => {
+const getById = async (id: number): Promise<INoteType | Error> => {
     try {
-        const { data } = await Api.get(`/tasks/${id}`);
+        const { data } = await Api.get(`/notes/${id}`);
         if (data) return data;
-        return new Error("Erro ao listar os registos");
+        return new Error("Erro ao listar as notas");
     } catch (error) {
         console.error(error);
         return new Error(
@@ -45,12 +45,12 @@ const getById = async (id: number): Promise<ITaskType | Error> => {
 };
 
 const create = async (
-    task: Omit<ITaskType, "id">
-): Promise<ITaskType | Error> => {
+    note: Omit<INoteType, "id">
+): Promise<INoteType | Error> => {
     try {
-        const { data } = await Api.post<ITaskType>("/tasks", task);
+        const { data } = await Api.post<INoteType>("/notes", note);
         if (data) return data;
-        return new Error("Erro ao cadastrar o item");
+        return new Error("Erro ao cadastrar a nota");
     } catch (error) {
         console.error(error);
         return new Error(
@@ -62,10 +62,10 @@ const create = async (
 
 const updateById = async (
     id: number,
-    task: ITaskType
+    note: INoteType
 ): Promise<void | Error> => {
     try {
-        await Api.put(`/tasks/${id}`, task);
+        await Api.put(`/notes/${id}`, note);
     } catch (error) {
         console.error(error);
         return new Error(
@@ -77,7 +77,7 @@ const updateById = async (
 
 const deleteById = async (id: number): Promise<void | Error> => {
     try {
-        await Api.delete(`/tasks/${id}`);
+        await Api.delete(`/notes/${id}`);
     } catch (error) {
         console.error(error);
         return new Error(
@@ -87,7 +87,7 @@ const deleteById = async (id: number): Promise<void | Error> => {
     }
 };
 
-export const TaskDAO = {
+export const NoteDAO = {
     getAll,
     getById,
     create,

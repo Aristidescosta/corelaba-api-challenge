@@ -1,21 +1,21 @@
 import { create } from 'zustand'
 
-import { ITaskType } from '../types'
+import { INoteType } from '../types'
 
 type Store = {
-    task: ITaskType | null,
+    note: INoteType | null,
     isLoading: boolean;
-    setTask: (task: ITaskType) => void
+    setNote: (note: INoteType) => void
     setLoading: (isLoading: boolean) => void
 }
 
 const initialStates = {
-    task: null,
+    note: null,
     isLoading: false
 }
 
-export const useTask = create<Store>()((set) => ({
+export const useNote = create<Store>()((set) => ({
     ...initialStates,
-    setTask: (task: ITaskType) => set(() => ({ task })),
+    setNote: (note: INoteType) => set(() => ({ note })),
     setLoading: (isLoading: boolean) => set(() => ({ isLoading })),
 }))

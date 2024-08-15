@@ -1,22 +1,22 @@
 import React from "react";
 import "./modal.scss";
 import { Button } from "../Button";
-import { useTask } from "@/shared/hooks";
+import { useNote } from "@/shared/hooks";
 
 interface IModalDeleteProps {
   onClose: () => void;
-  handleDeleteTask: (taskId: number) => Promise<void>;
+  handleDeleteNote: (noteId: number) => Promise<void>;
 }
 
 export const ModalDelete: React.FC<IModalDeleteProps> = ({
   onClose,
-  handleDeleteTask,
+  handleDeleteNote,
 }) => {
-  const task = useTask((state) => state.task);
+  const note = useNote((state) => state.note);
 
-  const onDeleteTask = async () => {
-    if (task) {
-      await handleDeleteTask(task.id);
+  const onDeleteNote = async () => {
+    if (note) {
+      await handleDeleteNote(note.id);
     }
   };
 
@@ -33,7 +33,7 @@ export const ModalDelete: React.FC<IModalDeleteProps> = ({
             <Button onClick={onClose} colorScheme="gray">
               Cancelar
             </Button>
-            <Button onClick={onDeleteTask}>Continuar</Button>
+            <Button onClick={onDeleteNote}>Continuar</Button>
           </div>
         </div>
       </div>

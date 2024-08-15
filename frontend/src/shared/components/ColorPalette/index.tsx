@@ -10,13 +10,13 @@ type ColorPaletteProps = {
 
 export const ColorPalette: React.FC<ColorPaletteProps> = ({
   color,
-  onChangeTaskColor,
+  onChangeNoteColor,
 }) => {
   return (
     <div
       className="color-circle"
       style={{ backgroundColor: color }}
-      onClick={() => onChangeTaskColor(color)}
+      onClick={() => onChangeNoteColor(color)}
     />
   );
 };

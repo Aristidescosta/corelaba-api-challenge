@@ -4,12 +4,12 @@ import { ColorPalette } from "./ColorPalette";
 
 export interface IDropdownMenuColorsProps {
   toCreate?: boolean;
-  onChangeTaskColor: (color: string) => void;
+  onChangeNoteColor: (color: string) => void;
 }
 
 export const DropdownMenuColors: React.FC<IDropdownMenuColorsProps> = ({
   toCreate,
-  onChangeTaskColor
+  onChangeNoteColor
 }) => {
   const colors = [
     "#F8BBD0",
@@ -34,7 +34,7 @@ export const DropdownMenuColors: React.FC<IDropdownMenuColorsProps> = ({
       <div className={`color-palette `}>
         {colors.map((color, index) => (
           <ColorPalette
-            onChangeTaskColor={onChangeTaskColor}
+            onChangeNoteColor={onChangeNoteColor}
             color={color}
             key={index}
           />

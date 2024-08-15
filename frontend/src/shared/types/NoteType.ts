@@ -1,4 +1,4 @@
-export interface ITaskType {
+export interface INoteType {
     id: number;
     title: string;
     description: string;

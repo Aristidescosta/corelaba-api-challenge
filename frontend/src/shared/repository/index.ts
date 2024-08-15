@@ -1,17 +1,17 @@
-import { TaskDAO, TTaskWithTotalCount } from "../services/api/Task"
-import { ITaskType } from "../types"
+import { NoteDAO, TNoteWithTotalCount } from "../services/api/Note"
+import { INoteType } from "../types"
 
-export const addTask = (task: Omit<ITaskType, 'id'>): Promise<ITaskType> => {
+export const addNote = (note: Omit<INoteType, 'id'>): Promise<INoteType> => {
     return new Promise((resolve, reject) => {
-        if (task.title.trim() === '') {
-            reject('Insira o titulo da tarefa')
-        } else if (task.description.trim() === '') {
-            reject('Insira uma nota para este item')
-        } else if (task.description.length < 5) {
+        if (note.title.trim() === '') {
+            reject('Insira o titulo da nota')
+        } else if (note.description.trim() === '') {
+            reject('Insira uma descrição para esta nota')
+        } else if (note.description.length < 5) {
             reject('Descrição deve ter pelo menos 5 caracteres')
         }
         else {
-            TaskDAO.create(task)
+            NoteDAO.create(note)
                 .then((response) => {
                     if (response instanceof Error) {
                         reject(response)
@@ -24,9 +24,9 @@ export const addTask = (task: Omit<ITaskType, 'id'>): Promise<ITaskType> => {
     })
 }
 
-export const getAllTasks = (page: number, filter: string): Promise<TTaskWithTotalCount> => {
+export const getAllNotes = (page: number, filter: string): Promise<TNoteWithTotalCount> => {
     return new Promise((resolve, reject) => {
-        TaskDAO.getAll(page, filter)
+        NoteDAO.getAll(page, filter)
             .then((response) => {
                 if (response instanceof Error) {
                     reject(response)
@@ -38,9 +38,9 @@ export const getAllTasks = (page: number, filter: string): Promise<TTaskWithTota
     })
 }
 
-export const updateTask = (task: ITaskType): Promise<void> => {
+export const updateNote = (note: INoteType): Promise<void> => {
     return new Promise((resolve, reject) => {
-        TaskDAO.updateById(task.id, task)
+        NoteDAO.updateById(note.id, note)
             .then((response) => {
                 if (response instanceof Error) {
                     reject(response)
@@ -52,9 +52,9 @@ export const updateTask = (task: ITaskType): Promise<void> => {
     });
 }
 
-export const deleteTask = (taskId: number): Promise<void> => {
+export const deleteNote = (noteId: number): Promise<void> => {
     return new Promise((resolve, reject) => {
-        TaskDAO.deleteById(taskId)
+        NoteDAO.deleteById(noteId)
             .then((response) => {
                 if (response instanceof Error) {
                     reject(response)

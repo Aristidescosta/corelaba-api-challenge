@@ -3,31 +3,31 @@ import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 
-import { ITaskType } from "@/shared/types";
+import { INoteType } from "@/shared/types";
 
 import { DropdownMenuColors } from "../DropdownMenuColors";
 import { Tooltip } from "../Tooltip";
 import { Divider } from "../Divider";
 
-import "./task-card.scss";
+import "./note-card.scss";
 
-interface ITaskCardProps {
+interface INoteCardProps {
   toCreate?: boolean;
-  task?: ITaskType;
-  handleCreateTask: (
-    task: Omit<ITaskType, "id">,
+  note?: INoteType;
+  handleCreateNote: (
+    note: Omit<INoteType, "id">,
     callback?: () => void
   ) => Promise<void>;
-  handleClickToDelete?: (task: ITaskType) => void;
-  handleEditTask?: (task: ITaskType, toFavorite?: boolean) => Promise<void>;
+  handleClickToDelete?: (note: INoteType) => void;
+  handleEditNote?: (note: INoteType, toFavorite?: boolean) => Promise<void>;
 }
 
-export const TaskCard: React.FC<ITaskCardProps> = ({
+export const NoteCard: React.FC<INoteCardProps> = ({
   handleClickToDelete,
-  handleCreateTask,
-  handleEditTask,
+  handleCreateNote,
+  handleEditNote,
   toCreate,
-  task,
+  note,
 }) => {
   const [cardColor, setCardColor] = useState("#FFF");
   const [isFavorite, setIsFavorite] = useState(false);
@@ -66,16 +66,16 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   }, []);
 
   useEffect(() => {
-    if (task && inputRef.current) {
-      inputRef.current.value = task.title;
-      setCardColor(task.color);
-      setIsFavorite(task.isFavorite);
+    if (note && inputRef.current) {
+      inputRef.current.value = note.title;
+      setCardColor(note.color);
+      setIsFavorite(note.isFavorite);
     }
   }, []);
 
-  const onChangeTaskColor = (color: string) => {
-    if (task) {
-      handleEditTask?.({ ...task, color }, true).then(() => {
+  const onChangeNoteColor = (color: string) => {
+    if (note) {
+      handleEditNote?.({ ...note, color }, true).then(() => {
         setCardColor(color);
         setShowMenuColors(false);
       });
@@ -85,19 +85,19 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   };
 
   const onChangeFavoriteStatus = async () => {
-    if (task) {
-      const updatedTask = { ...task, isFavorite: !task.isFavorite };
+    if (note) {
+      const updatedNote = { ...note, isFavorite: !note.isFavorite };
 
-      handleEditTask?.(updatedTask, true).then(() =>
-        setIsFavorite(task.isFavorite)
+      handleEditNote?.(updatedNote, true).then(() =>
+        setIsFavorite(note.isFavorite)
       );
     } else {
       setIsFavorite((state) => !state);
     }
   };
 
-  const onCreateTask = async () => {
-    const newTask: Omit<ITaskType, "id"> = {
+  const onCreateNote = async () => {
+    const newNote: Omit<INoteType, "id"> = {
       color: cardColor,
       title: inputRef.current?.value ?? "",
       isFavorite: isFavorite,
@@ -107,9 +107,9 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
     };
 
     if (toCreate) {
-      await handleCreateTask(newTask, clearInputs);
-    } else if (task) {
-      await handleEditTask?.(task, false);
+      await handleCreateNote(newNote, clearInputs);
+    } else if (note) {
+      await handleEditNote?.(note, false);
     }
   };
 
@@ -123,7 +123,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
         }
       } else {
         e.preventDefault(); // Evita a quebra de linha padrão
-        onCreateTask(); // Executa a função ao pressionar Enter
+        onCreateNote(); // Executa a função ao pressionar Enter
       }
     }
   };
@@ -137,15 +137,15 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
         <Tooltip
           label={
             toCreate
-              ? "Insira o título da tarefa"
+              ? "Insira o título da nota"
               : inputRef.current?.value ?? ""
           }
         >
           <input
             onKeyDown={handleKeyDown}
-            placeholder="Insira o título da tarefa"
+            placeholder="Insira o título da nota"
             type="text"
-            defaultValue={task?.title}
+            defaultValue={note?.title}
             ref={inputRef}
           />
         </Tooltip>
@@ -172,8 +172,8 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
         <textarea
           onKeyDown={handleKeyDown}
           ref={textareaRef}
-          name="tasks"
-          defaultValue={task?.description}
+          name="Notes"
+          defaultValue={note?.description}
           placeholder={
             toCreate
               ? "Criar nota..."
@@ -199,7 +199,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
           <div ref={dropdownRef}>
             {showMenuColors && (
               <DropdownMenuColors
-                onChangeTaskColor={onChangeTaskColor}
+                onChangeNoteColor={onChangeNoteColor}
                 toCreate={toCreate}
               />
             )}
@@ -209,7 +209,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
           size={24}
           cursor={"pointer"}
           className={`${toCreate ? "not-visible" : ""}`}
-          onClick={task ? () => handleClickToDelete?.(task) : undefined}
+          onClick={note ? () => handleClickToDelete?.(note) : undefined}
         />
       </div>
     </div>
