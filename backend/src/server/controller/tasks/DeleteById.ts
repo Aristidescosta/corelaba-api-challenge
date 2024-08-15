@@ -23,7 +23,7 @@ export const deleteById = async (req: Request<IParamsProps>, res: Response) => {
       }
     });
   }
-  console.log(req.params);
+  
   const result = await TasksProvider.deleteById(id);
 
   if (result instanceof Error) {

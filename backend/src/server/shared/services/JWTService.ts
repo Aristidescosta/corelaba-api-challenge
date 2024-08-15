@@ -6,7 +6,6 @@ interface IJWTData {
 
 const signin = (data: IJWTData) => {
   const JWT_SECRET = process.env.JWT_SECRET;
-  console.log(JWT_SECRET);
   if (!JWT_SECRET) return 'JWT_SECRET_NOT_FOUND';
   return jwt.sign(data, JWT_SECRET, { expiresIn: '24h' });
 };
