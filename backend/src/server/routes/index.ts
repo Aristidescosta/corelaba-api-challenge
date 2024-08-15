@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { TasksController, UserController } from '../controller';
-import { ensureAuthenticated } from '../shared/middlewares';
 
 const router = Router();
 

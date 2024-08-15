@@ -212,7 +212,7 @@ export const Home: React.FC = () => {
             )}
 
             {tasks.filter((task) => !task.isFavorite).length > 0 && (
-              <article className="center">
+              <article className="center" style={{ paddingBottom: 24 }}>
                 <p>Outras</p>
 
                 <div className="list-task">

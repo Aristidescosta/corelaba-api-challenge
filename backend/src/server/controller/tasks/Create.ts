@@ -31,5 +31,5 @@ export const create = async (req: Request<{}, {}, ITask>, res: Response) => {
     });
   }
 
-  return res.status(StatusCodes.CREATED).json(result);
+  return res.status(StatusCodes.CREATED).json({ ...task, id: result });
 };

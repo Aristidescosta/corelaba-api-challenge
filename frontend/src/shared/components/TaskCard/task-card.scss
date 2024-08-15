@@ -18,6 +18,7 @@ div {
     color: #50656e;
     border-radius: 15px;
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.25);
+    margin-bottom: 12px;
 
     @media (max-width: 375px) {
       width: 280px;
@@ -82,9 +83,9 @@ div {
 
   .dropdown-content {
     position: absolute;
-    right: -3rem;
+    right: -4rem;
     z-index: 1;
-    bottom: -13rem;
+    bottom: -6rem;
     width: 280px;
     background-color: #fff;
     overflow: auto;

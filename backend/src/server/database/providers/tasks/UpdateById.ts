@@ -4,6 +4,7 @@ import { ITask } from '../../models';
 
 export const updateById = async (id: number, task: Omit<ITask, 'id'>): Promise<void | Error> => {
   try {
+    console.log(id, task)
     const result = await Knex(ETableNames.tasks)
       .update(task)
       .where('id', '=', id);

@@ -69,6 +69,8 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
         setCardColor(color);
         setShowMenuColors(false);
       });
+    } else {
+      setCardColor(color);
     }
   };
 

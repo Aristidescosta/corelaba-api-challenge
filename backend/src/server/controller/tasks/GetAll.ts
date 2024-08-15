@@ -23,7 +23,7 @@ export const getAllValidation = validation((getSchema) => ({
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
   const result = await TasksProvider.getAll(req.query.page || 1, req.query.limit || 7, req.query.filter || '', Number(req.query.id));
   const count = await TasksProvider.count(req.query.filter || '');
-
+  console.log(req.query.filter, req.query.page, req.query.limit);
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
