@@ -1,8 +1,8 @@
 import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
-import { ITask } from '../../models';
+import { INote } from '../../models';
 
-export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<ITask[] | Error> => {
+export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<INote[] | Error> => {
   try {
     const result = await Knex(ETableNames.tasks)
       .select('*')

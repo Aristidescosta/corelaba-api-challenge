@@ -107,8 +107,8 @@
   },
   "exclude": [
     "./jest.config.ts",
-    ".node_modules",
-    "./tests",
+    "./node_modules",
+    /* "./tests", */
     "./build"
   ]
 }

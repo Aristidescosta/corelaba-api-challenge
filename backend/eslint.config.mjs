@@ -23,4 +23,14 @@ export default [
       '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
+  {
+    'overrides': [
+      {
+        'files': ['tests/**/*'],
+        'env': {
+          'jest': true
+        }
+      }
+    ]
+  }
 ];

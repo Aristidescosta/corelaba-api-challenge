@@ -1,8 +1,8 @@
-import { ITask, IUser } from '../../models';
+import { INote, IUser } from '../../models';
 
 declare module 'knex/types/tables' {
   interface Tables {
-    tasks: ITask
+    tasks: INote
     user: IUser
   }
 }

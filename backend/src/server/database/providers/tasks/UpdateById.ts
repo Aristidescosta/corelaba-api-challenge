@@ -1,8 +1,8 @@
 import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
-import { ITask } from '../../models';
+import { INote } from '../../models';
 
-export const updateById = async (id: number, task: Omit<ITask, 'id'>): Promise<void | Error> => {
+export const updateById = async (id: number, task: Omit<INote, 'id'>): Promise<void | Error> => {
   try {
     const result = await Knex(ETableNames.tasks)
       .update(task)

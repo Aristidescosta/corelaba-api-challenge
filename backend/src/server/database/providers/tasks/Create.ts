@@ -1,8 +1,8 @@
 import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
-import { ITask } from '../../models';
+import { INote } from '../../models';
 
-export const create = async (task: Omit<ITask, 'id'>): Promise<number | Error> => {
+export const create = async (task: Omit<INote, 'id'>): Promise<number | Error> => {
   try {
     const [result] = await Knex(ETableNames.tasks).insert(task).returning('id');
 

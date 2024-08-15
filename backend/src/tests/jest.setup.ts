@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import supertest from 'supertest';
 
-import { server } from '../src/server/Server';
-import { Knex } from '../src/server/database/knex';
+import { server } from '../server/Server';
+import { Knex } from '../server/database/knex';
 
 
 beforeAll(async () => {

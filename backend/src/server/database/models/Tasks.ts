@@ -1,4 +1,4 @@
-export interface ITask {
+export interface INote {
   id: number;
   title: string;
   description?: string;

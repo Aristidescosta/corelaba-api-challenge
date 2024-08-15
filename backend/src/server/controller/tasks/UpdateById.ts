@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
-import { ITask } from '../../database/models';
+import { INote } from '../../database/models';
 import { IParamsProps } from './GetById';
 import { IBodyProps } from './Create';
 import { TasksProvider } from '../../database/providers/tasks';
@@ -11,7 +11,7 @@ import { TasksProvider } from '../../database/providers/tasks';
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object({
     title: yup.string().required().min(3),
-    description: yup.string().max(255),
+    description: yup.string().min(5).max(255),
     isFavorite: yup.boolean().required(),
     color: yup.string().required().min(3).max(255),
     createdAt: yup.date().required(),
@@ -25,7 +25,7 @@ export const updateByIdValidation = validation((getSchema) => ({
 }));
 
 
-export const updateById = async (req: Request<IParamsProps, {}, ITask>, res: Response) => {
+export const updateById = async (req: Request<IParamsProps, {}, INote>, res: Response) => {
   const { id } = req.params;
   const task = req.body;
 

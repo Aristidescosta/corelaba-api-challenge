@@ -3,11 +3,13 @@
 import { Knex } from 'knex';
 import path from 'path';
 
+const databasePath = path.resolve(__dirname, '..', '..', '..', '..', 'database.sqlite');
+
 export const development: Knex.Config = {
   client: 'sqlite3',
   useNullAsDefault: true,
   connection: {
-    filename: path.resolve(__dirname, '..', '..', '..', '..', 'database.sqlite')
+    filename: path.resolve(__dirname, databasePath)
   },
   migrations: {
     directory: path.resolve(__dirname, '..', 'migrations')
@@ -25,7 +27,7 @@ export const development: Knex.Config = {
 
 export const test: Knex.Config = {
   ...development,
-  connection: ':memory'
+  connection: ':memory:',
 };
 
 export const production: Knex.Config = {
