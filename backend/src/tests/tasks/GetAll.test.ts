@@ -17,7 +17,7 @@ describe('Notes - GetAll', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -26,7 +26,7 @@ describe('Notes - GetAll', () => {
       expect(res1.statusCode).toEqual(StatusCodes.CREATED)
 
       const response = await testServer
-      .get('/tasks')
+      .get('/notes')
       .send()
 
       expect(Number(response.header['x-total-count'])).toBeGreaterThan(0)

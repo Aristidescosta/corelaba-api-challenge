@@ -2,7 +2,7 @@ import { INote, IUser } from '../../models';
 
 declare module 'knex/types/tables' {
   interface Tables {
-    tasks: INote
+    notes: INote
     user: IUser
   }
 }

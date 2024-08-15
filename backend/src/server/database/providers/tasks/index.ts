@@ -5,7 +5,7 @@ import * as getAll from './GetAll';
 import * as create from './Create';
 import * as count from './Count';
 
-export const TasksProvider = {
+export const NotesProvider = {
   ...updateById,
   ...deleteById,
   ...create,

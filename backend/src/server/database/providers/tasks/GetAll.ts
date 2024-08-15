@@ -4,7 +4,7 @@ import { INote } from '../../models';
 
 export const getAll = async (page: number, limit: number, filter: string, id = 0): Promise<INote[] | Error> => {
   try {
-    const result = await Knex(ETableNames.tasks)
+    const result = await Knex(ETableNames.notes)
       .select('*')
       .where('id', Number(id))
       .orWhere('title', 'like', `%${filter}%`)
@@ -12,7 +12,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
       .limit(limit);
 
     if (id > 0 && result.every(item => item.id !== id)) {
-      const resultById = await Knex(ETableNames.tasks)
+      const resultById = await Knex(ETableNames.notes)
         .select('*')
         .where('id', '=', id)
         .first();

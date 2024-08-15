@@ -2,9 +2,9 @@ import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
 import { INote } from '../../models';
 
-export const create = async (task: Omit<INote, 'id'>): Promise<number | Error> => {
+export const create = async (note: Omit<INote, 'id'>): Promise<number | Error> => {
   try {
-    const [result] = await Knex(ETableNames.tasks).insert(task).returning('id');
+    const [result] = await Knex(ETableNames.notes).insert(note).returning('id');
 
     if (typeof result === 'object') {
       return result.id;

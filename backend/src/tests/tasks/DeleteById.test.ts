@@ -19,7 +19,7 @@ describe('Notes - Delete', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -28,7 +28,7 @@ describe('Notes - Delete', () => {
       expect(res1.statusCode).toEqual(StatusCodes.CREATED)
 
       const resDeleted = await testServer
-        .delete(`/tasks/${res1.body.id}`)
+        .delete(`/notes/${res1.body.id}`)
         .send()
 
 
@@ -39,7 +39,7 @@ describe('Notes - Delete', () => {
   describe('Cenários de falha', () => {
     it('Tenta apagar uma nota que não existe', async () => {
       const res1 = await testServer
-        .delete('/tasks/99999999')
+        .delete('/notes/99999999')
         .send()
 
       expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR)

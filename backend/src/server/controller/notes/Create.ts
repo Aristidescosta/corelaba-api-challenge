@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
-import { INote } from '../../database/models/Tasks';
-import { TasksProvider } from '../../database/providers/tasks';
+import { INote } from '../../database/models/Note';
+import { NotesProvider } from '../../database/providers/tasks';
 
 export interface IBodyProps extends Omit<INote, 'id'> { }
 
@@ -22,7 +22,7 @@ export const createValidation = validation((getSchema) => ({
 
 export const create = async (req: Request<{}, {}, INote>, res: Response) => {
   const task = req.body;
-  const result = await TasksProvider.create(task);
+  const result = await NotesProvider.create(task);
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {

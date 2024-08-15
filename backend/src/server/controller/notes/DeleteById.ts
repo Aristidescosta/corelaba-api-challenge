@@ -4,7 +4,7 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
 import { IParamsProps } from './GetById';
-import { TasksProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/tasks';
 
 export const deleteByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamsProps>(yup.object({
@@ -24,7 +24,7 @@ export const deleteById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
   
-  const result = await TasksProvider.deleteById(id);
+  const result = await NotesProvider.deleteById(id);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

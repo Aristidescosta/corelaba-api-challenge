@@ -6,7 +6,7 @@ import { validation } from '../../shared/middlewares';
 import { INote } from '../../database/models';
 import { IParamsProps } from './GetById';
 import { IBodyProps } from './Create';
-import { TasksProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/tasks';
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object({
@@ -37,7 +37,7 @@ export const updateById = async (req: Request<IParamsProps, {}, INote>, res: Res
     });
   }
 
-  const result = await TasksProvider.updateById(id, task);
+  const result = await NotesProvider.updateById(id, task);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

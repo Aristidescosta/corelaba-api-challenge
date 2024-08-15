@@ -4,7 +4,7 @@ import { INote } from '../../models';
 
 export const getById = async (id: number): Promise<INote | Error> => {
   try {
-    const result = await Knex(ETableNames.tasks)
+    const result = await Knex(ETableNames.notes)
       .select('*')
       .where('id', '=', id)
       .first();

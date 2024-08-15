@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { TasksController, UserController } from '../controller';
+import { NotesController, UserController } from '../controller';
 
 const router = Router();
 
@@ -8,12 +8,12 @@ router.get('/', (_, res) => {
 });
 
 
-//Tasks
-router.delete('/tasks/:id', /* ensureAuthenticated, */ TasksController.deleteByIdValidation, TasksController.deleteById);
-router.put('/tasks/:id', /* ensureAuthenticated, */ TasksController.updateByIdValidation, TasksController.updateById);
-router.post('/tasks', /* ensureAuthenticated, */ TasksController.createValidation, TasksController.create);
-router.get('/tasks/:id', /* ensureAuthenticated, */ TasksController.getByIdValidation, TasksController.getById);
-router.get('/tasks', /* ensureAuthenticated, */ TasksController.getAllValidation, TasksController.getAll);
+//Notes
+router.delete('/notes/:id', /* ensureAuthenticated, */ NotesController.deleteByIdValidation, NotesController.deleteById);
+router.put('/notes/:id', /* ensureAuthenticated, */ NotesController.updateByIdValidation, NotesController.updateById);
+router.post('/notes', /* ensureAuthenticated, */ NotesController.createValidation, NotesController.create);
+router.get('/notes/:id', /* ensureAuthenticated, */ NotesController.getByIdValidation, NotesController.getById);
+router.get('/notes', /* ensureAuthenticated, */ NotesController.getAllValidation, NotesController.getAll);
 
 //Users
 router.post('/signin', UserController.signInValidation, UserController.signIn);

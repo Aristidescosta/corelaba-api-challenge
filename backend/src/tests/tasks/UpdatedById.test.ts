@@ -17,7 +17,7 @@ describe('Notes - Update', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -26,7 +26,7 @@ describe('Notes - Update', () => {
       expect(res1.statusCode).toEqual(StatusCodes.CREATED)
 
       const response = await testServer
-        .put(`/tasks/${res1.body.id}`)
+        .put(`/notes/${res1.body.id}`)
         .send(res1.body)
 
       expect(response.statusCode).toEqual(StatusCodes.NO_CONTENT)
@@ -45,7 +45,7 @@ describe('Notes - Update', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -54,7 +54,7 @@ describe('Notes - Update', () => {
       expect(res1.statusCode).toEqual(StatusCodes.CREATED)
 
       const response = await testServer
-        .put(`/tasks/${res1.body.id}`)
+        .put(`/notes/${res1.body.id}`)
         .send({ ...res1.body, title: 'No' })
 
       expect(response.statusCode).toEqual(StatusCodes.BAD_REQUEST)
@@ -71,7 +71,7 @@ describe('Notes - Update', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -80,7 +80,7 @@ describe('Notes - Update', () => {
       expect(res1.statusCode).toEqual(StatusCodes.CREATED)
 
       const response = await testServer
-        .put(`/tasks/${res1.body.id}`)
+        .put(`/notes/${res1.body.id}`)
         .send({ ...res1.body, description: 'Test' })
 
       expect(response.body).toHaveProperty('errors.body.description')
@@ -97,7 +97,7 @@ describe('Notes - Update', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -106,7 +106,7 @@ describe('Notes - Update', () => {
       expect(res1.statusCode).toEqual(StatusCodes.CREATED)
 
       const response = await testServer
-        .put(`/tasks/${res1.body.id}`)
+        .put(`/notes/${res1.body.id}`)
         .send({ ...res1.body, color: 'FF' })
 
       expect(response.body).toHaveProperty('errors.body.color')

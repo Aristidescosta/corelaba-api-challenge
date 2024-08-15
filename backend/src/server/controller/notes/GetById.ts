@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
-import { TasksProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/tasks';
 
 export interface IParamsProps {
   id?: number,
@@ -27,7 +27,7 @@ export const getById = async (req: Request<IParamsProps>, res: Response) => {
     });
   }
 
-  const result = await TasksProvider.getById(id);
+  const result = await NotesProvider.getById(id);
 
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

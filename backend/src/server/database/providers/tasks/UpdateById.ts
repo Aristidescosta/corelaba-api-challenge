@@ -2,10 +2,10 @@ import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
 import { INote } from '../../models';
 
-export const updateById = async (id: number, task: Omit<INote, 'id'>): Promise<void | Error> => {
+export const updateById = async (id: number, note: Omit<INote, 'id'>): Promise<void | Error> => {
   try {
-    const result = await Knex(ETableNames.tasks)
-      .update(task)
+    const result = await Knex(ETableNames.notes)
+      .update(note)
       .where('id', '=', id);
 
     if (result > 0) return;

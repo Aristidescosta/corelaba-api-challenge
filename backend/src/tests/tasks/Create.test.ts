@@ -17,7 +17,7 @@ describe('Notes - Create', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body.id).not.toBeNull()
@@ -39,7 +39,7 @@ describe('Notes - Create', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.statusCode).toEqual(StatusCodes.BAD_REQUEST)
@@ -56,7 +56,7 @@ describe('Notes - Create', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body).toHaveProperty('errors.body.description')
@@ -73,7 +73,7 @@ describe('Notes - Create', () => {
       };
 
       const res1 = await testServer
-        .post('/tasks')
+        .post('/notes')
         .send(note);
 
       expect(res1.body).toHaveProperty('errors.body.color')

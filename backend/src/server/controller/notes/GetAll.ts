@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
-import { TasksProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/tasks';
 interface IQueryProps {
   page?: number | null,
   limit?: number | null,
@@ -21,8 +21,8 @@ export const getAllValidation = validation((getSchema) => ({
 }));
 
 export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Response) => {
-  const result = await TasksProvider.getAll(req.query.page || 1, req.query.limit || 7, req.query.filter || '', Number(req.query.id));
-  const count = await TasksProvider.count(req.query.filter || '');
+  const result = await NotesProvider.getAll(req.query.page || 1, req.query.limit || 7, req.query.filter || '', Number(req.query.id));
+  const count = await NotesProvider.count(req.query.filter || '');
   if (result instanceof Error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {

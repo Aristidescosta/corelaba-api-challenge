@@ -5,7 +5,7 @@ import { ETableNames } from '../ETableNames';
 export async function up(knex: Knex) {
   return knex
     .schema
-    .createTable(ETableNames.tasks, table => {
+    .createTable(ETableNames.notes, table => {
       table.bigIncrements('id').primary().index();
       table.string('title', 150).checkLength('<=', 150).notNullable();
       table.string('description', 255).checkLength('<=', 250).notNullable();
@@ -17,7 +17,7 @@ export async function up(knex: Knex) {
       table.comment('Tabela para armazenar as tarefas');
     })
     .then(() => {
-      console.log(`# Create table ${ETableNames.tasks}`);
+      console.log(`# Create table ${ETableNames.notes}`);
     });
 }
 
@@ -25,9 +25,9 @@ export async function up(knex: Knex) {
 export async function down(knex: Knex) {
   return knex
     .schema
-    .dropTable(ETableNames.tasks)
+    .dropTable(ETableNames.notes)
     .then(() => {
-      console.log(`# Dropped table ${ETableNames.tasks}`);
+      console.log(`# Dropped table ${ETableNames.notes}`);
     });
 }
 
