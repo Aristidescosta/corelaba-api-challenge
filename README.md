@@ -96,6 +96,7 @@ Certifique-se de ter instalado as seguintes ferramentas:
 - `yarn knex:migrate`: Executa as migrações do banco de dados.
 - `yarn knex:rollback`: Reverte a última migração do banco de dados.
 - `yarn knex:seed`: Popula o banco de dados com dados iniciais.
+- `yarn test`: Testa todas as rotas da aplicação.
 
 ### Frontend
 
@@ -103,6 +104,9 @@ Certifique-se de ter instalado as seguintes ferramentas:
 - `yarn build`: Cria uma build de produção do projeto.
 - `yarn preview`: Serve a build de produção para visualização local.
 - `yarn lint`: Executa o ESLint para checagem de estilo de código.
+
+## Atualizações pendentes
+- Está em processo, isto na parte do front a implementação de login
 
 ## Conclusão
 
