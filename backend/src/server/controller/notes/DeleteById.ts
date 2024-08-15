@@ -4,7 +4,7 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
 import { IParamsProps } from './GetById';
-import { NotesProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/notes';
 
 export const deleteByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamsProps>(yup.object({

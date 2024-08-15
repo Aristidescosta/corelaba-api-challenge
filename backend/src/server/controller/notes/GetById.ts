@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
-import { NotesProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/notes';
 
 export interface IParamsProps {
   id?: number,

@@ -6,7 +6,7 @@ import { validation } from '../../shared/middlewares';
 import { INote } from '../../database/models';
 import { IParamsProps } from './GetById';
 import { IBodyProps } from './Create';
-import { NotesProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/notes';
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(yup.object({

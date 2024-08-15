@@ -4,7 +4,7 @@ import * as yup from 'yup';
 
 import { validation } from '../../shared/middlewares';
 import { INote } from '../../database/models/Note';
-import { NotesProvider } from '../../database/providers/tasks';
+import { NotesProvider } from '../../database/providers/notes';
 
 export interface IBodyProps extends Omit<INote, 'id'> { }
 
