@@ -11,9 +11,9 @@ export const create = async (note: Omit<INote, 'id'>): Promise<number | Error> =
     } else if (typeof result === 'number') {
       return result;
     }
-    return new Error('Erro ao criar a tarefa 1');
+    return new Error('Erro ao criar a nota 1');
   } catch (error) {
     console.log(error);
-    return Error('Erro ao criar a tarefa');
+    return Error('Erro ao criar a nota');
   };
 };

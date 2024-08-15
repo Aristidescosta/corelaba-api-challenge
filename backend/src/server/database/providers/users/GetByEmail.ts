@@ -14,6 +14,6 @@ export const getByEmail = async (email: string): Promise<IUser | Error> => {
     return new Error('Usuario não não encontrado');
   } catch (error) {
     console.log(error);
-    return Error('Erro ao consultar a tarefa');
+    return Error('Erro ao consultar a nota');
   };
 };

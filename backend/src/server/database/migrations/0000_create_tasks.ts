@@ -14,7 +14,7 @@ export async function up(knex: Knex) {
       table.date('createdAt');
       table.date('updatedAt');
 
-      table.comment('Tabela para armazenar as tarefas');
+      table.comment('Tabela para armazenar as notas');
     })
     .then(() => {
       console.log(`# Create table ${ETableNames.notes}`);

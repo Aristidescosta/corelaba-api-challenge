@@ -9,9 +9,9 @@ export const deleteById = async (id: number): Promise<void | Error> => {
 
     if (result > 0) return;
 
-    return new Error('Erro ao apagar a tarefa');
+    return new Error('Erro ao apagar a nota');
   } catch (error) {
     console.log(error);
-    return Error('Erro ao apagar a tarefa');
+    return Error('Erro ao apagar a nota');
   };
 };

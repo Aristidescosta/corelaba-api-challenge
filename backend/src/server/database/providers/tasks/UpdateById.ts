@@ -10,9 +10,9 @@ export const updateById = async (id: number, note: Omit<INote, 'id'>): Promise<v
 
     if (result > 0) return;
 
-    return new Error('Erro ao atualizar a tarefa');
+    return new Error('Erro ao atualizar a nota');
   } catch (error) {
     console.log(error);
-    return Error('Erro ao atualizar a tarefa');
+    return Error('Erro ao atualizar a nota');
   };
 };

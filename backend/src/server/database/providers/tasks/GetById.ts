@@ -14,6 +14,6 @@ export const getById = async (id: number): Promise<INote | Error> => {
     return new Error('Tarefa não encontrada');
   } catch (error) {
     console.log(error);
-    return Error('Erro ao consultar a tarefa');
+    return Error('Erro ao consultar a nota');
   };
 };

@@ -21,6 +21,6 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
     return result;
   } catch (error) {
     console.log(error);
-    return Error('Erro ao consultar as tarefas');
+    return Error('Erro ao consultar as notas');
   };
 };

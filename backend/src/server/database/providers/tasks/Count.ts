@@ -9,9 +9,9 @@ export const count = async (filter = ''): Promise<number | Error> => {
 
     if (Number.isInteger(Number(count))) return Number(count);
 
-    return new Error('Erro ao consultar a quantidade total de tarefas');
+    return new Error('Erro ao consultar a quantidade total de notas');
   } catch (error) {
     console.log(error);
-    return Error('Erro ao consultar a quantidade total de tarefas');
+    return Error('Erro ao consultar a quantidade total de notas');
   };
 };
