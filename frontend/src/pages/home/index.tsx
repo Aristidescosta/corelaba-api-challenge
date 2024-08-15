@@ -102,7 +102,6 @@ export const Home: React.FC = () => {
   const handleEditNote = useCallback(
     async (note: INoteType, toFavorite?: boolean) => {
       setLoading(true);
-      console.log(note)
       toast.promise(
         updateNote(note)
           .then(() => {

@@ -26,6 +26,10 @@ $close-font-weight: bold;
     padding: $modal-content-padding;
     width: $modal-width;
 
+    @media (max-width: 768px) {
+      width: 80%;
+    }
+
     > div {
       width: 100%;
       margin-top: 2rem;
@@ -35,6 +39,11 @@ $close-font-weight: bold;
       .flex {
         margin-top: 12px;
         justify-content: space-between;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          gap: 32px;
+        }
       }
     }
   }

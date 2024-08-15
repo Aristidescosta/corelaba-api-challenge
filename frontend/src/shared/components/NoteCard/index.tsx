@@ -75,7 +75,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
 
   const onChangeNoteColor = (color: string) => {
     if (note) {
-      handleEditNote?.({ ...note, color }, true).then(() => {
+      handleEditNote?.({ ...note, color }, false).then(() => {
         setCardColor(color);
         setShowMenuColors(false);
       });
