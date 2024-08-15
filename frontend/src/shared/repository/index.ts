@@ -42,6 +42,7 @@ export const updateTask = (task: ITaskType): Promise<void> => {
     return new Promise((resolve, reject) => {
         TaskDAO.updateById(task.id, task)
             .then((response) => {
+                console.log(response)
                 if (response instanceof Error) {
                     reject(response)
                 } else {

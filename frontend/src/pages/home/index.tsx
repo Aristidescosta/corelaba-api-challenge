@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Header, ModalDelete, TaskCard } from "@/shared/components";
-import { addTask, deleteTask, getAllTasks } from "@/shared/repository";
+import {
+  addTask,
+  deleteTask,
+  getAllTasks,
+  updateTask,
+} from "@/shared/repository";
 import { ITaskType } from "@/shared/types";
 import "@/shared/styles/home.scss";
 
@@ -94,6 +99,43 @@ export const Home: React.FC = () => {
     [setTasks]
   );
 
+  const handleEditTask = useCallback(
+    async (task: ITaskType, toFavorite?: boolean) => {
+      setLoading(true);
+
+      console.log("Tarefa atualizada: ", task.title, task.id);
+      toast.promise(
+        updateTask(task)
+          .then(() => {
+            setTasks((prevTasks) =>
+              prevTasks.map((prevTask) =>
+                prevTask.id === task.id ? task : prevTask
+              )
+            );
+          })
+          .finally(() => setLoading(false)),
+        {
+          pending: toFavorite
+            ? `${
+                task.isFavorite ? "Favoritando" : "Removendo dos favoritos a"
+              } tarefa `
+            : "Atualizando tarefa...",
+          success: `Tarefa "${task.title}" atualizada com sucesso! 👌`,
+          error: {
+            render({ data }) {
+              const errorMessage =
+                typeof data === "string"
+                  ? data
+                  : "Erro ao atualizar a tarefa 🤯";
+              return data instanceof Error ? data.message : errorMessage;
+            },
+          },
+        }
+      );
+    },
+    [setTasks]
+  );
+
   useEffect(() => {
     const onGetAllTasks = async () => {
       setLoading(true);
@@ -105,8 +147,14 @@ export const Home: React.FC = () => {
             })
             .finally(() => setLoading(false)),
           {
-            pending: "Carregando a lista de tarefas...",
-            success: "Lista de tarefas carregada com sucesso! 👌",
+            pending:
+              search.trim() !== ""
+                ? "Pesquisando por tarefa"
+                : "Carregando a lista de tarefas...",
+            success:
+              search.trim() !== ""
+                ? undefined
+                : "Lista de tarefas carregada com sucesso! 👌",
             error: {
               render({ data }) {
                 const errorMessage =
@@ -138,42 +186,51 @@ export const Home: React.FC = () => {
           <p>Shift + Enter para quebra de linha</p>
           <TaskCard toCreate handleCreateTask={handleCreateTask} />
         </section>
-        {tasks.filter((task) => task.isFavorite).length > 0 && (
-          <article className="center">
-            <p>Favoritos</p>
 
-            <div className="list-task">
-              {tasks
-                .filter((task) => task.isFavorite)
-                .map((item, index) => (
-                  <TaskCard
-                    key={index}
-                    task={item}
-                    handleCreateTask={handleCreateTask}
-                    handleClickToDelete={onOpen}
-                  />
-                ))}
-            </div>
-          </article>
-        )}
+        {tasks.length === 0 ? (
+          <p>Nenhuma tarefa cadastrada</p>
+        ) : (
+          <>
+            {tasks.filter((task) => task.isFavorite).length > 0 && (
+              <article className="center">
+                <p>Favoritos</p>
 
-        {tasks.filter((task) => !task.isFavorite).length > 0 && (
-          <article className="center">
-            <p>Outras</p>
+                <div className="list-task">
+                  {tasks
+                    .filter((task) => task.isFavorite)
+                    .map((item, index) => (
+                      <TaskCard
+                        key={index}
+                        task={item}
+                        handleCreateTask={handleCreateTask}
+                        handleClickToDelete={onOpen}
+                        handleEditTask={handleEditTask}
+                      />
+                    ))}
+                </div>
+              </article>
+            )}
 
-            <div className="list-task">
-              {tasks
-                .filter((task) => !task.isFavorite)
-                .map((item, index) => (
-                  <TaskCard
-                    key={index}
-                    task={item}
-                    handleCreateTask={handleCreateTask}
-                    handleClickToDelete={onOpen}
-                  />
-                ))}
-            </div>
-          </article>
+            {tasks.filter((task) => !task.isFavorite).length > 0 && (
+              <article className="center">
+                <p>Outras</p>
+
+                <div className="list-task">
+                  {tasks
+                    .filter((task) => !task.isFavorite)
+                    .map((item, index) => (
+                      <TaskCard
+                        key={index}
+                        task={item}
+                        handleCreateTask={handleCreateTask}
+                        handleClickToDelete={onOpen}
+                        handleEditTask={handleEditTask}
+                      />
+                    ))}
+                </div>
+              </article>
+            )}
+          </>
         )}
         {isOpen && (
           <ModalDelete handleDeleteTask={handleDeleteTask} onClose={onClose} />

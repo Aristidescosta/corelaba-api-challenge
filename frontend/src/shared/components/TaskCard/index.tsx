@@ -16,12 +16,14 @@ interface ITaskCardProps {
   task?: ITaskType;
   handleCreateTask: (task: Omit<ITaskType, "id">) => Promise<void>;
   handleClickToDelete?: (task: ITaskType) => void;
+  handleEditTask?: (task: ITaskType, toFavorite?: boolean) => Promise<void>;
 }
 
 export const TaskCard: React.FC<ITaskCardProps> = ({
-  handleCreateTask,
-  toCreate,
   handleClickToDelete,
+  handleCreateTask,
+  handleEditTask,
+  toCreate,
   task,
 }) => {
   const [cardTitle, setCardTitle] = useState("");
@@ -62,20 +64,28 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   }, [task]);
 
   const onChangeTaskColor = (color: string) => {
-    setCardColor(color);
+    if (task) {
+      handleEditTask?.({ ...task, color }, true).then(() => {
+        setCardColor(color);
+        setShowMenuColors(false);
+      });
+    }
   };
 
-  const onChangeFavoriteStatus = () => {
+  const onChangeFavoriteStatus = async () => {
     if (task) {
-      console.log(task.isFavorite);
-      setIsFavorite(!task.isFavorite);
+      const updatedTask = { ...task, isFavorite: !task.isFavorite };
+
+      handleEditTask?.(updatedTask, true).then(() =>
+        setIsFavorite(task.isFavorite)
+      );
     } else {
       setIsFavorite((state) => !state);
     }
   };
 
   const onCreateTask = async () => {
-    const task: Omit<ITaskType, "id"> = {
+    const newTask: Omit<ITaskType, "id"> = {
       color: cardColor,
       title: cardTitle,
       isFavorite: isFavorite,
@@ -84,7 +94,11 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
       description: description,
     };
 
-    await handleCreateTask(task);
+    if (toCreate) {
+      await handleCreateTask(newTask);
+    } else if (task) {
+      await handleEditTask?.(task, false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
