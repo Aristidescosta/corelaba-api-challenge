@@ -109,7 +109,13 @@ export const NoteCard: React.FC<INoteCardProps> = ({
     if (toCreate) {
       await handleCreateNote(newNote, clearInputs);
     } else if (note) {
-      await handleEditNote?.(note, false);
+      const updatedNote: INoteType = {
+        ...note,
+        title: inputRef.current?.value ?? note.title,
+        description: textareaRef.current?.value ?? note.description,
+        updatedAt: new Date(),
+      };
+      await handleEditNote?.(updatedNote, false);
     }
   };
 
@@ -136,9 +142,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
       <div className="flex">
         <Tooltip
           label={
-            toCreate
-              ? "Insira o título da nota"
-              : inputRef.current?.value ?? ""
+            toCreate ? "Insira o título da nota" : inputRef.current?.value ?? ""
           }
         >
           <input
