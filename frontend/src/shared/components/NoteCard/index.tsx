@@ -71,7 +71,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
       setCardColor(note.color);
       setIsFavorite(note.isFavorite);
     }
-  }, []);
+  }, [note]);
 
   const onChangeNoteColor = (color: string) => {
     if (note) {
