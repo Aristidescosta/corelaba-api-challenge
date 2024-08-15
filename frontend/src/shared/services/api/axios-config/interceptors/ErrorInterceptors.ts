@@ -2,8 +2,6 @@ import { AxiosError } from "axios";
 
 export const errorInterceptors = (error: AxiosError) => {
 
-    console.log(error.response?.status, error.message)
-
     if (error.message === "Network Error") {
         console.log("Erro de conexão")
         return Promise.reject(new Error("Erro de conexão"));

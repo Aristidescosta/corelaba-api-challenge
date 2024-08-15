@@ -7,8 +7,8 @@ export const addTask = (task: Omit<ITaskType, 'id'>): Promise<ITaskType> => {
             reject('Insira o titulo da tarefa')
         } else if (task.description.trim() === '') {
             reject('Insira uma nota para este item')
-        } else if (task.description.length < 9) {
-            reject('Descrição deve ter pelo menos 10 caracteres')
+        } else if (task.description.length < 5) {
+            reject('Descrição deve ter pelo menos 5 caracteres')
         }
         else {
             TaskDAO.create(task)
@@ -42,7 +42,6 @@ export const updateTask = (task: ITaskType): Promise<void> => {
     return new Promise((resolve, reject) => {
         TaskDAO.updateById(task.id, task)
             .then((response) => {
-                console.log(response)
                 if (response instanceof Error) {
                     reject(response)
                 } else {
@@ -55,7 +54,6 @@ export const updateTask = (task: ITaskType): Promise<void> => {
 
 export const deleteTask = (taskId: number): Promise<void> => {
     return new Promise((resolve, reject) => {
-        console.log(taskId)
         TaskDAO.deleteById(taskId)
             .then((response) => {
                 if (response instanceof Error) {

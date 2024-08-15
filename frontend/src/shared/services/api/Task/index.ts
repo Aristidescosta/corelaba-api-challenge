@@ -15,7 +15,6 @@ const getAll = async (
 ): Promise<TTaskWithTotalCount | Error> => {
     try {
         const relativeUrl = `/tasks?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&filter=${filter}`;
-        console.log(relativeUrl)
         const { data, headers } = await Api.get(relativeUrl);
         if (data)
             return {

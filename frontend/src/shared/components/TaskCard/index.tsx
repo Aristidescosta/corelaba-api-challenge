@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
@@ -14,7 +14,10 @@ import "./task-card.scss";
 interface ITaskCardProps {
   toCreate?: boolean;
   task?: ITaskType;
-  handleCreateTask: (task: Omit<ITaskType, "id">) => Promise<void>;
+  handleCreateTask: (
+    task: Omit<ITaskType, "id">,
+    callback?: () => void
+  ) => Promise<void>;
   handleClickToDelete?: (task: ITaskType) => void;
   handleEditTask?: (task: ITaskType, toFavorite?: boolean) => Promise<void>;
 }
@@ -26,14 +29,13 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   toCreate,
   task,
 }) => {
-  const [cardTitle, setCardTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [cardColor, setCardColor] = useState("#FFF");
   const [isFavorite, setIsFavorite] = useState(false);
   const [showMenuColors, setShowMenuColors] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleClickToEdit = () => {
     inputRef.current?.focus();
@@ -48,6 +50,14 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
     }
   };
 
+  const clearInputs = () => {
+    if (inputRef.current && textareaRef.current) {
+      inputRef.current.value = "";
+      textareaRef.current.value = "";
+      setCardColor("#FFF");
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -56,12 +66,12 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   }, []);
 
   useEffect(() => {
-    if (task) {
-      setCardTitle(task.title);
+    if (task && inputRef.current) {
+      inputRef.current.value = task.title;
       setCardColor(task.color);
       setIsFavorite(task.isFavorite);
     }
-  }, [task]);
+  }, []);
 
   const onChangeTaskColor = (color: string) => {
     if (task) {
@@ -89,24 +99,28 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
   const onCreateTask = async () => {
     const newTask: Omit<ITaskType, "id"> = {
       color: cardColor,
-      title: cardTitle,
+      title: inputRef.current?.value ?? "",
       isFavorite: isFavorite,
       createdAt: new Date(),
       updatedAt: new Date(),
-      description: description,
+      description: textareaRef.current?.value ?? "",
     };
 
     if (toCreate) {
-      await handleCreateTask(newTask);
+      await handleCreateTask(newTask, clearInputs);
     } else if (task) {
       await handleEditTask?.(task, false);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLTextAreaElement> | KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Enter") {
       if (e.shiftKey) {
-        setCardTitle((prevText) => prevText + "\n");
+        if (inputRef.current) {
+          inputRef.current.value += "\n";
+        }
       } else {
         e.preventDefault(); // Evita a quebra de linha padrão
         onCreateTask(); // Executa a função ao pressionar Enter
@@ -120,12 +134,18 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
       style={{ backgroundColor: cardColor }}
     >
       <div className="flex">
-        <Tooltip label={toCreate ? "Insira o título da tarefa" : cardTitle}>
+        <Tooltip
+          label={
+            toCreate
+              ? "Insira o título da tarefa"
+              : inputRef.current?.value ?? ""
+          }
+        >
           <input
+            onKeyDown={handleKeyDown}
             placeholder="Insira o título da tarefa"
             type="text"
-            defaultValue={cardTitle}
-            onChange={(e) => setCardTitle(e.target.value)}
+            defaultValue={task?.title}
             ref={inputRef}
           />
         </Tooltip>
@@ -151,7 +171,7 @@ export const TaskCard: React.FC<ITaskCardProps> = ({
       <div className="flex-content">
         <textarea
           onKeyDown={handleKeyDown}
-          onChange={(e) => setDescription(e.target.value)}
+          ref={textareaRef}
           name="tasks"
           defaultValue={task?.description}
           placeholder={

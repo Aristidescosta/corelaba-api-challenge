@@ -43,13 +43,14 @@ export const Home: React.FC = () => {
   };
 
   const handleCreateTask = useCallback(
-    async (task: Omit<ITaskType, "id">) => {
+    async (task: Omit<ITaskType, "id">, callback?: () => void) => {
       if (!isLoading) {
         setLoading(false);
         toast.promise(
           addTask(task)
             .then((response) => {
               setTasks((prevTasks) => [...prevTasks, response]);
+              callback?.();
             })
             .finally(() => setLoading(false)),
           {
@@ -57,7 +58,6 @@ export const Home: React.FC = () => {
             success: `Tarefa "${task.title}" criada com sucesso! 👌`,
             error: {
               render({ data }) {
-                console.log(typeof data);
                 const errorMessage =
                   typeof data === "string" ? data : "Erro ao criar a tarefa 🤯";
                 return data instanceof Error ? data.message : errorMessage;
@@ -67,7 +67,7 @@ export const Home: React.FC = () => {
         );
       }
     },
-    [setTasks]
+    []
   );
 
   const handleDeleteTask = useCallback(
@@ -96,14 +96,13 @@ export const Home: React.FC = () => {
         }
       );
     },
-    [setTasks]
+    []
   );
 
   const handleEditTask = useCallback(
     async (task: ITaskType, toFavorite?: boolean) => {
       setLoading(true);
 
-      console.log("Tarefa atualizada: ", task.title, task.id);
       toast.promise(
         updateTask(task)
           .then(() => {
@@ -133,7 +132,7 @@ export const Home: React.FC = () => {
         }
       );
     },
-    [setTasks]
+    []
   );
 
   useEffect(() => {
