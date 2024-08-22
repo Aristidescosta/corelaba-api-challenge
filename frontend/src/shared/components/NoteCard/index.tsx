@@ -1,4 +1,10 @@
-import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
+import React, {
+  DragEvent,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
@@ -10,6 +16,7 @@ import { Tooltip } from "../Tooltip";
 import { Divider } from "../Divider";
 
 import "./note-card.scss";
+import { toast } from "react-toastify";
 
 interface INoteCardProps {
   toCreate?: boolean;
@@ -73,6 +80,27 @@ export const NoteCard: React.FC<INoteCardProps> = ({
     }
   }, [note]);
 
+  const handleDrop = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type === "text/plain") {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target && textareaRef.current) {
+          console.log();
+          textareaRef.current.value = event.target.result as string;
+        }
+      };
+      reader.readAsText(file);
+      if (inputRef.current) {
+        inputRef.current.value = file.name;
+      }
+    } else {
+      toast.error("Tipo de ficheiro não suportado");
+    }
+  };
+
   const onChangeNoteColor = (color: string) => {
     if (note) {
       handleEditNote?.({ ...note, color }, false).then(() => {
@@ -128,12 +156,21 @@ export const NoteCard: React.FC<INoteCardProps> = ({
           inputRef.current.value += "\n";
         }
       } else {
-        e.preventDefault(); // Evita a quebra de linha padrão
-        onCreateNote(); // Executa a função ao pressionar Enter
+        e.preventDefault();
+        onCreateNote();
       }
     }
   };
 
+  const handleDragOver = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+  
+  const handleDragLeave = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
   return (
     <div
       className={`card ${toCreate ? "h-32" : ""}`}
@@ -178,6 +215,12 @@ export const NoteCard: React.FC<INoteCardProps> = ({
           ref={textareaRef}
           name="Notes"
           defaultValue={note?.description}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onDragLeave={handleDragLeave}
+          style={{
+            transition: "border 0.3s ease, background-color 0.3s ease",
+          }}
           placeholder={
             toCreate
               ? "Criar nota..."
