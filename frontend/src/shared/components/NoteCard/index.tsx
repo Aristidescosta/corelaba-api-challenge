@@ -82,7 +82,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
 
   const handleDrop = (e: DragEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
-
+    e.stopPropagation();
     const file = e.dataTransfer.files[0];
     if (file && file.type === "text/plain") {
       const reader = new FileReader();
@@ -97,7 +97,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
         inputRef.current.value = file.name;
       }
     } else {
-      toast.error("Tipo de ficheiro não suportado")
+      toast.error("Tipo de ficheiro não suportado");
     }
   };
 
@@ -156,18 +156,21 @@ export const NoteCard: React.FC<INoteCardProps> = ({
           inputRef.current.value += "\n";
         }
       } else {
-        e.preventDefault(); // Evita a quebra de linha padrão
-        onCreateNote(); // Executa a função ao pressionar Enter
+        e.preventDefault();
+        onCreateNote();
       }
     }
   };
 
-  // Função para lidar com o evento de arrasto
   const handleDragOver = (e: DragEvent<HTMLTextAreaElement>) => {
-    e.preventDefault(); // Necessário para permitir o drop
-    e.stopPropagation(); // Impede que o evento se propague
+    e.preventDefault();
+    e.stopPropagation();
   };
-
+  
+  const handleDragLeave = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
   return (
     <div
       className={`card ${toCreate ? "h-32" : ""}`}
@@ -214,6 +217,10 @@ export const NoteCard: React.FC<INoteCardProps> = ({
           defaultValue={note?.description}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
+          onDragLeave={handleDragLeave}
+          style={{
+            transition: "border 0.3s ease, background-color 0.3s ease",
+          }}
           placeholder={
             toCreate
               ? "Criar nota..."
