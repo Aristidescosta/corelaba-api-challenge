@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import { Header, ModalDelete, NoteCard } from "@/shared/components";
 import {
@@ -70,34 +75,32 @@ export const Home: React.FC = () => {
     []
   );
 
-  const handleDeleteNote = useCallback(
-    async (noteId: number) => {
-      setLoading(true);
+  const handleDeleteNote = useCallback(async (noteId: number) => {
+    setLoading(true);
 
-      toast.promise(
-        deleteNote(noteId)
-          .then(() => {
-            setNotes((prevNotes) =>
-              prevNotes.filter((note) => note.id !== noteId)
-            );
-            onClose();
-          })
-          .finally(() => setLoading(false)),
-        {
-          pending: "Excluindo nota...",
-          success: "Nota excluída com sucesso! 👌",
-          error: {
-            render({ data }) {
-              const errorMessage =
-                typeof data === "string" ? data : "Erro ao excluir a nota 🤯";
-              return data instanceof Error ? data.message : errorMessage;
-            },
+    toast.promise(
+      deleteNote(noteId)
+        .then(() => {
+          setNotes((prevNotes) =>
+            prevNotes.filter((note) => note.id !== noteId)
+          );
+          onClose();
+        })
+        .finally(() => setLoading(false)),
+      {
+        pending: "Excluindo nota...",
+        success: "Nota excluída com sucesso! 👌",
+        error: {
+          render({ data }) {
+            const errorMessage =
+              typeof data === "string" ? data : "Erro ao excluir a nota 🤯";
+            return data instanceof Error ? data.message : errorMessage;
           },
-        }
-      );
-    },
-    []
-  );
+        },
+      }
+    );
+  }, []);
+ 
 
   const handleEditNote = useCallback(
     async (note: INoteType, toFavorite?: boolean) => {
@@ -122,9 +125,7 @@ export const Home: React.FC = () => {
           error: {
             render({ data }) {
               const errorMessage =
-                typeof data === "string"
-                  ? data
-                  : "Erro ao atualizar a nota 🤯";
+                typeof data === "string" ? data : "Erro ao atualizar a nota 🤯";
               return data instanceof Error ? data.message : errorMessage;
             },
           },
@@ -182,7 +183,7 @@ export const Home: React.FC = () => {
         <section className="center">
           <p>Enter para salvar</p>
           <p>Shift + Enter para quebra de linha</p>
-          <NoteCard toCreate handleCreateNote={handleCreateNote} />
+          <NoteCard  toCreate handleCreateNote={handleCreateNote} />
         </section>
 
         {notes.length === 0 ? (
