@@ -3,27 +3,27 @@
 import { Knex } from 'knex';
 import path from 'path';
 
-const databasePath = path.resolve(__dirname, '..', '..', '..', '..', 'database.sqlite');
+/* const databasePath = path.resolve(__dirname, '..', '..', '..', '..', 'database.sqlite'); */
 
 export const development: Knex.Config = {
-  client: 'sqlite3',
-  useNullAsDefault: true,
+  client: process.env.DATABASE_CLIENT,
+  version: process.env.DATABASE_VERSION,
   connection: {
-    filename: path.resolve(__dirname, databasePath)
+    host: process.env.LOCAL_DATABASE_HOST,
+    port: Number(process.env.LOCAL_DATABASE_PORT || 5432),
+    user: process.env.LOCAL_DATABASE_USER,
+    password: process.env.LOCAL_DATABASE_PASSWORD,
+    database: process.env.LOCAL_DATABASE_DATABASE,
   },
+  useNullAsDefault: true,
   migrations: {
     directory: path.resolve(__dirname, '..', 'migrations')
   },
   seeds: {
     directory: path.resolve(__dirname, '..', 'seeds')
-  },
-  pool: {
-    afterCreate: (connection: any, done: Function) => {
-      connection.run('PRAGMA foreign_keys = ON');
-      done();
-    }
   }
 };
+
 
 export const test: Knex.Config = {
   ...development,

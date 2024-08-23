@@ -35,7 +35,7 @@ Certifique-se de ter instalado as seguintes ferramentas:
    yarn
    ```
 
-4. Configure as variáveis de ambiente no arquivo `.env`(verificar o `.env.example`):
+4. Criar e configurar as variáveis de ambiente no arquivo `.env`(verificar o `.env.example`):
 
    ```bash
    PORT=
