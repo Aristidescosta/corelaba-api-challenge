@@ -88,13 +88,13 @@ export const NoteCard: React.FC<INoteCardProps> = ({
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target && textareaRef.current) {
-          console.log();
           textareaRef.current.value = event.target.result as string;
         }
       };
       reader.readAsText(file);
       if (inputRef.current) {
-        inputRef.current.value = file.name;
+        const FILE_NAME = file.name.split('.')[0]
+        inputRef.current.value = FILE_NAME
       }
     } else {
       toast.error("Tipo de ficheiro não suportado");
