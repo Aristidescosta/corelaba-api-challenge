@@ -97,7 +97,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
         inputRef.current.value = FILE_NAME
       }
     } else {
-      toast.error("Tipo de ficheiro não suportado");
+      toast.error("Tipo de ficheiro não suportado - Somente text/plain");
     }
   };
 
