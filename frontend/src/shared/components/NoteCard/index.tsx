@@ -176,7 +176,7 @@ export const NoteCard: React.FC<INoteCardProps> = ({
       className={`card ${toCreate ? "h-32" : ""}`}
       style={{ backgroundColor: cardColor }}
     >
-      <div className="flex">
+      <div className="flex j-between">
         <Tooltip
           label={
             toCreate ? "Insira o título da nota" : inputRef.current?.value ?? ""
