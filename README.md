@@ -105,6 +105,33 @@ Certifique-se de ter instalado as seguintes ferramentas:
 - `yarn preview`: Serve a build de produção para visualização local.
 - `yarn lint`: Executa o ESLint para checagem de estilo de código.
 
+
+# Tecnologias utilizadas
+- # Front end
+
+- `axios`
+- `react`
+- `react-icons`
+- `react-paginate`
+- `react-toastify`
+- `sass`
+- `zustand`
+
+- # Backend
+
+- `bcryptjs`
+- `cors`
+- `express`
+- `http-status-codes`
+- `jsonwebtoken`
+- `knex`
+- `pg(postgres)`
+- `yup`
+- `sqlite3`
+- `jest`
+- `supertest`
+
+
 ## Atualizações pendentes
 - Está em processo, isto na parte do front a implementação de login
 
