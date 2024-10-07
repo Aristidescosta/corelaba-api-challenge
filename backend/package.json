@@ -10,10 +10,10 @@
     "test": "jest",
     "postinstall": "tsc",
     "production": "node ./build/index.js",
-    "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback --all",
-    "knex:rollback": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback",
-    "knex:migrate": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:latest",
-    "knex:seed": "knex --knexfile ./src/server/database/knex/Environment.ts seed:run"
+    "knex:rollback-all": "knex --knexfile ./knexfile.ts migrate:rollback --all",
+    "knex:rollback": "knex --knexfile ./knexfile.ts migrate:rollback",
+    "knex:migrate": "knex --knexfile ./knexfile.ts migrate:latest",
+    "knex:seed": "knex --knexfile ./knexfile.ts seed:run"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
