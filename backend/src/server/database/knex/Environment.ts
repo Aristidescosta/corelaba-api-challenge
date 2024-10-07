@@ -28,6 +28,7 @@ export const development: Knex.Config = {
 export const test: Knex.Config = {
   ...development,
   connection: ':memory:',
+  client: "sqlite3"
 };
 
 export const production: Knex.Config = {
