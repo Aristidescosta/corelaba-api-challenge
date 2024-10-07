@@ -3,9 +3,10 @@ import { ETableNames } from '../ETableNames';
 import { INote } from '../models';
 
 export const seed = async (knex: Knex) => {
-  const [{ count }] = await knex(ETableNames.notes).count<[{ count: number }]>('* as count');
-  if (!Number.isInteger(count) || Number(count) > 0) return;
-
+  console.log("Seeding")
+  const [{ count }] = await knex(ETableNames.notes).count<[{ count: number }]>('* as count')
+  const countNumber = Number(count);
+  if (!Number.isInteger(countNumber) || Number(countNumber) > 0) return;
   const notesToInsert: INote[] = Array.from({ length: 400 }, (_, index) => ({
     id: index + 1,
     title: `Note ${index + 1}`,
@@ -17,4 +18,5 @@ export const seed = async (knex: Knex) => {
   }));
 
   await knex(ETableNames.notes).insert(notesToInsert);
+  console.log(`Added notes to ${ETableNames.notes}`);
 };

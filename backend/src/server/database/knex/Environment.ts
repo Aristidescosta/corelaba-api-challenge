@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { Knex } from 'knex';
 import path from 'path';
+import 'dotenv/config';
 
 /* const databasePath = path.resolve(__dirname, '..', '..', '..', '..', 'database.sqlite'); */
 
 export const development: Knex.Config = {
   client: process.env.DATABASE_CLIENT,
-  version: process.env.DATABASE_VERSION,
   connection: {
     host: process.env.LOCAL_DATABASE_HOST,
     port: Number(process.env.LOCAL_DATABASE_PORT || 5432),
@@ -28,6 +28,7 @@ export const development: Knex.Config = {
 export const test: Knex.Config = {
   ...development,
   connection: ':memory:',
+  client: "sqlite3"
 };
 
 export const production: Knex.Config = {
