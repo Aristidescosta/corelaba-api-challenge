@@ -13,7 +13,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
   try {
     const [{ count }] = await Knex(ETableNames.notes)
       .count<[{ count: string }]>('* as count')
-      .where('title', 'like', `%${filter}%`);
+      .where('title', 'ilike', `%${filter}%`);
 
     const totalItems = Number(count);
 
@@ -22,7 +22,7 @@ export const getAll = async (page: number, limit: number, filter: string, id = 0
     const result = await Knex(ETableNames.notes)
       .select('*')
       .where('id', Number(id ? id : 0))
-      .orWhere('title', 'like', `%${filter}%`)
+      .orWhere('title', 'ilike', `%${filter}%`)
       .offset((page - 1) * limit)
       .limit(limit);
 
