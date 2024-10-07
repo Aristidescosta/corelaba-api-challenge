@@ -233,10 +233,14 @@ export const Home: React.FC = () => {
             )}
           </>
         )}
-        <Pagination
-          pages={pages}
-          setCurrentPage={setCurrentPage}
-        />
+        {
+          pages > 1 && (
+            <Pagination
+              pages={pages}
+              setCurrentPage={setCurrentPage}
+            />
+          )
+        }
         {isOpen && (
           <ModalDelete handleDeleteNote={handleDeleteNote} onClose={onClose} />
         )}

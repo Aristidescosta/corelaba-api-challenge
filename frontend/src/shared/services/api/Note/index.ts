@@ -18,7 +18,6 @@ const getAll = async (
     try {
         const relativeUrl = `/notes?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&filter=${filter}`;
         const { data } = await Api.get(relativeUrl);
-        console.log("DATA: ", data);
         if (data)
             return data;
         return new Error("Erro ao listar as notas");
