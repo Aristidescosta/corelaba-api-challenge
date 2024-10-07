@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 
-import { Header, ModalDelete, NoteCard } from "@/shared/components";
+import { Header, ModalDelete, NoteCard, Pagination } from "@/shared/components";
 import {
   addNote,
   deleteNote,
@@ -25,6 +25,8 @@ import { useSearchParams } from "react-router-dom";
 export const Home: React.FC = () => {
   const [notes, setNotes] = useState<INoteType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const setNote = useNote((state) => state.setNote);
   const isLoading = useNote((state) => state.isLoading);
@@ -35,9 +37,9 @@ export const Home: React.FC = () => {
     return searchParams.get("filter") || "";
   }, [searchParams]);
 
-  const page = useMemo(() => {
+  /* const page = useMemo(() => {
     return Number(searchParams.get("page") || "1");
-  }, [searchParams]);
+  }, [searchParams]); */
 
   const onOpen = (note: INoteType) => {
     setIsOpen(true);
@@ -100,7 +102,7 @@ export const Home: React.FC = () => {
       }
     );
   }, []);
- 
+
 
   const handleEditNote = useCallback(
     async (note: INoteType, toFavorite?: boolean) => {
@@ -117,9 +119,8 @@ export const Home: React.FC = () => {
           .finally(() => setLoading(false)),
         {
           pending: toFavorite
-            ? `${
-                note.isFavorite ? "Favoritando" : "Removendo dos favoritos a"
-              } nota `
+            ? `${note.isFavorite ? "Favoritando" : "Removendo dos favoritos a"
+            } nota `
             : "Atualizando nota...",
           success: `Nota "${note.title}" atualizada com sucesso! 👌`,
           error: {
@@ -140,8 +141,9 @@ export const Home: React.FC = () => {
       setLoading(true);
       theBounce(() => {
         toast.promise(
-          getAllNotes(page, search)
+          getAllNotes(currentPage, search)
             .then((allNotes) => {
+              setPages(allNotes.pages)
               setNotes(allNotes.data);
             })
             .finally(() => setLoading(false)),
@@ -169,7 +171,7 @@ export const Home: React.FC = () => {
     };
 
     onGetAllNotes();
-  }, [theBounce, search, page]);
+  }, [theBounce, search, currentPage]);
 
   return (
     <>
@@ -183,7 +185,7 @@ export const Home: React.FC = () => {
         <section className="center">
           <p>Enter para salvar</p>
           <p>Shift + Enter para quebra de linha</p>
-          <NoteCard  toCreate handleCreateNote={handleCreateNote} />
+          <NoteCard toCreate handleCreateNote={handleCreateNote} />
         </section>
 
         {notes.length === 0 ? (
@@ -231,6 +233,10 @@ export const Home: React.FC = () => {
             )}
           </>
         )}
+        <Pagination
+          pages={pages}
+          setCurrentPage={setCurrentPage}
+        />
         {isOpen && (
           <ModalDelete handleDeleteNote={handleDeleteNote} onClose={onClose} />
         )}

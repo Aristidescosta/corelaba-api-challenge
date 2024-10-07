@@ -4,23 +4,23 @@ import { INoteType } from "@/shared/types";
 
 import { Api } from "../axios-config";
 
-export type TNoteWithTotalCount = {
-    data: INoteType[];
-    totalCount: number;
+export type IPaginatedResult<T> = {
+    data: T[];
+    total: number;
+    pages: number;
+    itemsPerPage: number;
 };
 
 const getAll = async (
     page = 1,
     filter = ""
-): Promise<TNoteWithTotalCount | Error> => {
+): Promise<IPaginatedResult<INoteType> | Error> => {
     try {
         const relativeUrl = `/notes?page=${page}&limit=${Environment.LIMITE_DE_LINHAS}&filter=${filter}`;
-        const { data, headers } = await Api.get(relativeUrl);
+        const { data } = await Api.get(relativeUrl);
+        console.log("DATA: ", data);
         if (data)
-            return {
-                data,
-                totalCount: Number(headers["x-total-count"]) || data.length,
-            };
+            return data;
         return new Error("Erro ao listar as notas");
     } catch (error) {
         console.error(error);
