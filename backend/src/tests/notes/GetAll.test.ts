@@ -31,7 +31,7 @@ describe('Notes - GetAll', () => {
 
       expect(Number(response.header['x-total-count'])).toBeGreaterThan(0)
       expect(response.statusCode).toEqual(StatusCodes.OK)
-      expect(response.body.length).toBeGreaterThan(0)
+      expect(response.body.data.length).toBeGreaterThan(0)
     });
   })
 });
